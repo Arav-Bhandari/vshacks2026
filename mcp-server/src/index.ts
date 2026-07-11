@@ -132,7 +132,7 @@ async function getTrialLive(nctId: string): Promise<Trial | null> {
   }
 }
 
-const server = new McpServer({ name: "trialscope-mcp", version: "0.1.0" });
+const server = new McpServer({ name: "crap-mcp", version: "0.1.0" });
 
 server.registerTool(
   "search_trials",
@@ -280,6 +280,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error("Fatal error starting trialscope-mcp:", err);
+  console.error("Fatal error starting crap-mcp:", err);
   process.exit(1);
 });

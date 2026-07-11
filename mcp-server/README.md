@@ -1,7 +1,7 @@
-# trialscope-mcp
+# crap-mcp
 
 MCP server (stdio transport) exposing clinical-trial search tools for
-TrialScope AI. Reads from the local SQLite DB at
+CRAP. Reads from the local SQLite DB at
 `../database/clinical_trials.db` when present, falling back to the live
 ClinicalTrials.gov API v2 otherwise.
 
@@ -30,7 +30,7 @@ project `.mcp.json`):
 ```json
 {
   "mcpServers": {
-    "trialscope": {
+    "crap": {
       "command": "node",
       "args": ["/absolute/path/to/mcp-server/dist/index.js"]
     }
@@ -43,9 +43,9 @@ Or via `npx` once published:
 ```json
 {
   "mcpServers": {
-    "trialscope": {
+    "crap": {
       "command": "npx",
-      "args": ["-y", "trialscope-mcp"]
+      "args": ["-y", "crap-mcp"]
     }
   }
 }

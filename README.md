@@ -1,4 +1,4 @@
-# TrialScope AI - Clinical Trial Intelligence Platform
+# CRAP - Comprehensive Review and Analysis Platform
 
 **License**: MIT (Open Source)
 
@@ -12,7 +12,7 @@
 
 ## Inspiration
 
-The members of the TrialScope AI team came in with all but a singular question:
+The members of the CRAP team came in with all but a singular question:
 
 "_Why do SO MANY promising discoveries at the bench fail to reach the patients at the bedside?_"
 
@@ -23,14 +23,14 @@ When foundational design choices are made inside such unstructured, manual syste
 
 _The result?_ **Delayed trials, avoidable amendments, and millions of dollars in wasted effort.**
 
-**Enter TrialScope AI.**
+**Enter CRAP.**
 _Our mission?_ Controlling the controllables, by **making clinical trial design as intelligent as the science it tests**, narrowing the chasm between therapeutic discovery and approval.
 
 ---
 
 ## What it does
 
-TrialScope AI transforms messy, unstructured trial drafts into structured and regulator-aligned designs, followed by regenerating improved versions using AI.
+CRAP transforms messy, unstructured trial drafts into structured and regulator-aligned designs, followed by regenerating improved versions using AI.
 
 ### Core Workflow
 

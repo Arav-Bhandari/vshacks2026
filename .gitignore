@@ -8,8 +8,8 @@ backend/data/uploads/*
 !backend/data/uploads/.gitkeep
 database/*.db
 database/*.db-*
-backend/app/ml/models/*.pkl
-backend/app/ml/models/*.json
+backend/app/ml/models/*
+!backend/app/ml/models/duration_model.json
 .venv/
 venv/
 .pytest_cache/

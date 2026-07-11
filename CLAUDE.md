@@ -1,4 +1,4 @@
-# TrialScope AI Developer Guide
+# CRAP Developer Guide
 
 ## Quick Commands
 

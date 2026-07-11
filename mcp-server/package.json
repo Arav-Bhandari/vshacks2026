@@ -1,5 +1,5 @@
 {
-  "name": "trialscope-mcp",
+  "name": "crap-mcp",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -14,7 +14,7 @@
   "license": "ISC",
   "type": "module",
   "bin": {
-    "trialscope-mcp": "dist/index.js"
+    "crap-mcp": "dist/index.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",

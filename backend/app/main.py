@@ -1,11 +1,11 @@
-"""TrialScope AI FastAPI application entrypoint."""
+"""CRAP FastAPI application entrypoint."""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import db
 from app.routes import protocol, search, ws
 
-app = FastAPI(title="TrialScope AI")
+app = FastAPI(title="CRAP - Comprehensive Review and Analysis Platform")
 
 app.add_middleware(
     CORSMiddleware,
