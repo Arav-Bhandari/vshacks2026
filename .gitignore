@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.env
+.env.local
+node_modules/
+.next/
+backend/data/uploads/*
+!backend/data/uploads/.gitkeep
+database/*.db
+database/*.db-*
+backend/app/ml/models/*.pkl
+backend/app/ml/models/*.json
+.venv/
+venv/
+.pytest_cache/
+.DS_Store
+fda/**/*.pdf
