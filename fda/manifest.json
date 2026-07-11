@@ -1,0 +1,74 @@
+[
+  {
+    "filename": "general/general_e6r3.pdf",
+    "category": "general",
+    "title": "E6(R3) Good Clinical Practice",
+    "url": "https://www.fda.gov/media/169090/download"
+  },
+  {
+    "filename": "general/general_e8r1.pdf",
+    "category": "general",
+    "title": "E8(R1) General Considerations for Clinical Studies",
+    "url": "https://www.fda.gov/media/157560/download"
+  },
+  {
+    "filename": "general/general_e9.pdf",
+    "category": "general",
+    "title": "E9 Statistical Principles for Clinical Trials",
+    "url": "https://www.fda.gov/media/71336/download"
+  },
+  {
+    "filename": "general/general_adaptive.pdf",
+    "category": "general",
+    "title": "Adaptive Designs for Clinical Trials of Drugs and Biologics",
+    "url": "https://www.fda.gov/media/78495/download"
+  },
+  {
+    "filename": "general/general_enrichment.pdf",
+    "category": "general",
+    "title": "Enrichment Strategies for Clinical Trials to Support Approval",
+    "url": "https://www.fda.gov/media/121320/download"
+  },
+  {
+    "filename": "general/general_multiendpoints.pdf",
+    "category": "general",
+    "title": "Multiple Endpoints in Clinical Trials",
+    "url": "https://www.fda.gov/media/162416/download"
+  },
+  {
+    "filename": "general/general_e17.pdf",
+    "category": "general",
+    "title": "E17 Multi-Regional Clinical Trials",
+    "url": "https://www.fda.gov/media/102256/download"
+  },
+  {
+    "filename": "oncology/oncology_endpoints.pdf",
+    "category": "oncology",
+    "title": "Clinical Trial Endpoints for Approval of Cancer Drugs and Biologics",
+    "url": "https://www.fda.gov/media/71195/download"
+  },
+  {
+    "filename": "oncology/oncology_masterprotocols.pdf",
+    "category": "oncology",
+    "title": "Master Protocols for Oncology Trials",
+    "url": "https://www.fda.gov/media/120721/download"
+  },
+  {
+    "filename": "oncology/oncology_pro.pdf",
+    "category": "oncology",
+    "title": "Patient-Reported Outcome Measures: Use in Medical Product Development to Support Labeling Claims",
+    "url": "https://www.fda.gov/media/77832/download"
+  },
+  {
+    "filename": "genetics/genetics_ind.pdf",
+    "category": "genetics",
+    "title": "Human Gene Therapy IND Applications",
+    "url": "https://www.fda.gov/media/113760/download"
+  },
+  {
+    "filename": "genetics/genetics_ltfu.pdf",
+    "category": "genetics",
+    "title": "Long Term Follow-up After Administration of Human Gene Therapy Products",
+    "url": "https://www.fda.gov/media/113768/download"
+  }
+]
