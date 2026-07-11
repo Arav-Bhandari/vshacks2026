@@ -80,9 +80,10 @@ def parse_study(s: dict) -> dict | None:
     }
 
 
-def fetch_all(max_pages: int | None = None):
+def fetch_all(max_pages: int | None = None, statuses: str = "COMPLETED"):
     init_db()
-    token = TOKEN_FILE.read_text().strip() if TOKEN_FILE.exists() else None
+    token_file = TOKEN_FILE.with_suffix("." + statuses[:12].lower())
+    token = token_file.read_text().strip() if token_file.exists() else None
     if token == "DONE":
         print(f"already complete: {trial_count()} trials")
         return
@@ -90,7 +91,7 @@ def fetch_all(max_pages: int | None = None):
     with httpx.Client(timeout=60) as client:
         while True:
             params = {
-                "filter.overallStatus": "COMPLETED",
+                "filter.overallStatus": statuses,
                 "pageSize": 1000,
                 "fields": FIELDS,
             }
@@ -110,7 +111,7 @@ def fetch_all(max_pages: int | None = None):
             rows = [x for x in map(parse_study, data.get("studies", [])) if x]
             upsert_trials(rows)
             token = data.get("nextPageToken")
-            TOKEN_FILE.write_text(token or "DONE")
+            token_file.write_text(token or "DONE")
             pages += 1
             if pages % 10 == 0:
                 print(f"{trial_count()} trials loaded", flush=True)
@@ -121,4 +122,5 @@ def fetch_all(max_pages: int | None = None):
 
 if __name__ == "__main__":
     n = int(sys.argv[1]) if len(sys.argv) > 1 else None
-    fetch_all(n)
+    st = sys.argv[2] if len(sys.argv) > 2 else "COMPLETED"
+    fetch_all(n, st)
