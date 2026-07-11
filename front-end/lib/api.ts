@@ -26,7 +26,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     res = await fetch(`${API_URL}${path}`, init);
   } catch {
     throw new ApiError(
-      "Could not reach the TrialScope API. Is the backend running?",
+      "Could not reach the CRAP API. Is the backend running?",
       0,
     );
   }

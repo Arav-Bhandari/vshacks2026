@@ -1,44 +1,65 @@
 @import "tailwindcss";
 
 :root {
-  --canvas: #f6f4ee;
+  --canvas: #f2f1ed;
   --surface: #ffffff;
   --surface-raised: #ffffff;
-  --ink: #15201e;
-  --ink-muted: #5b6864;
-  --border: #dcd6c8;
-  --accent: #0f6b5c;
-  --accent-ink: #ffffff;
-  --accent-soft: #e2efe9;
-  --amber: #a3620c;
-  --amber-soft: #f6e9d4;
-  --red: #a3291f;
-  --red-soft: #f5e1de;
-  --blue: #29527a;
-  --blue-soft: #e2ebf3;
-  --grid-line: rgba(21, 32, 30, 0.06);
-  --shadow-color: 40 30% 12%;
+  --ink: #131313;
+  --ink-muted: #66645f;
+  --border: #dedbd2;
+  --accent: #ff4d1c;
+  --accent-ink: #0a0a0a;
+  --accent-soft: #ffe6da;
+  --amber: #a6660a;
+  --amber-soft: #f7e8d0;
+  --red: #b3261e;
+  --red-soft: #f6dfdc;
+  --blue: #1f4d8f;
+  --blue-soft: #dfe8f5;
+  --grid-line: rgba(19, 19, 19, 0.05);
+  --shadow-color: 20 10% 8%;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --canvas: #0b1211;
-    --surface: #101a18;
-    --surface-raised: #14211e;
-    --ink: #e9ede9;
-    --ink-muted: #93a19c;
-    --border: #223531;
-    --accent: #3ddbb9;
-    --accent-ink: #06201a;
-    --accent-soft: #16332c;
-    --amber: #e5a34a;
-    --amber-soft: #35291a;
-    --red: #e4796d;
-    --red-soft: #3a2220;
-    --blue: #7fb2e0;
-    --blue-soft: #1a2c3a;
-    --grid-line: rgba(233, 237, 233, 0.06);
+  :root:not([data-theme="light"]) {
+    --canvas: #0c0c0c;
+    --surface: #161615;
+    --surface-raised: #1c1c1a;
+    --ink: #f2f0ea;
+    --ink-muted: #9c988e;
+    --border: #302f2a;
+    --accent: #ff6a3d;
+    --accent-ink: #100a06;
+    --accent-soft: #3a2013;
+    --amber: #e8ab52;
+    --amber-soft: #362a15;
+    --red: #ec7a6e;
+    --red-soft: #3a201d;
+    --blue: #7fb0e8;
+    --blue-soft: #182838;
+    --grid-line: rgba(242, 240, 234, 0.05);
   }
+}
+
+:root[data-theme="dark"] {
+  --canvas: #0c0c0c;
+  --surface: #161615;
+  --surface-raised: #1c1c1a;
+  --ink: #f2f0ea;
+  --ink-muted: #9c988e;
+  --border: #302f2a;
+  --accent: #ff6a3d;
+  --accent-ink: #100a06;
+  --accent-soft: #3a2013;
+  --amber: #e8ab52;
+  --amber-soft: #362a15;
+  --red: #ec7a6e;
+  --red-soft: #3a201d;
+  --blue: #7fb0e8;
+  --blue-soft: #182838;
+  --grid-line: rgba(242, 240, 234, 0.05);
 }
 
 @theme inline {
@@ -75,7 +96,7 @@ body {
   background-image:
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background-size: 32px 32px;
   color: var(--ink);
   font-family: var(--font-body), sans-serif;
 }
@@ -92,27 +113,54 @@ body {
 }
 
 .font-display {
-  font-family: var(--font-display), serif;
+  font-family: var(--font-display), sans-serif;
 }
 
 .font-mono {
   font-family: var(--font-mono), monospace;
 }
 
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* generic press feedback for pressable elements */
+.pressable {
+  transition: transform 160ms var(--ease-out);
+}
+
+.pressable:active {
+  transform: scale(0.97);
+}
+
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(6px) scale(0.98);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 .animate-fade-up {
-  animation: fade-up 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: fade-up 320ms var(--ease-out) both;
 }
+
+/* staggered entrance for card/list grids, decorative only */
+.stagger > * {
+  opacity: 0;
+  animation: fade-up 320ms var(--ease-out) both;
+}
+
+.stagger > *:nth-child(1) { animation-delay: 0ms; }
+.stagger > *:nth-child(2) { animation-delay: 40ms; }
+.stagger > *:nth-child(3) { animation-delay: 80ms; }
+.stagger > *:nth-child(4) { animation-delay: 120ms; }
+.stagger > *:nth-child(5) { animation-delay: 160ms; }
+.stagger > *:nth-child(6) { animation-delay: 200ms; }
+.stagger > *:nth-child(n+7) { animation-delay: 240ms; }
 
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
@@ -121,6 +169,18 @@ body {
 
 .animate-pulse-dot {
   animation: pulse-dot 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .stagger > * {
+    animation-duration: 1ms;
+    animation-delay: 0ms !important;
+    transform: none !important;
+  }
+  .pressable:active {
+    transform: none;
+  }
 }
 
 .prose-protocol {
@@ -132,7 +192,7 @@ body {
 .prose-protocol h1,
 .prose-protocol h2,
 .prose-protocol h3 {
-  font-family: var(--font-display), serif;
+  font-family: var(--font-display), sans-serif;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
   color: var(--ink);

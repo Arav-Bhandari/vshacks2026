@@ -53,7 +53,7 @@ export function RadialGauge({
           y="47%"
           textAnchor="middle"
           dominantBaseline="middle"
-          className="font-display"
+          className="font-display tabular-nums"
           style={{ fill: "var(--ink)", fontSize: size * 0.19 }}
         >
           {Math.round(pct)}

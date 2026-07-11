@@ -1,31 +1,31 @@
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Mono, Public_Sans } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { SiteFooter } from "@/components/site-footer";
 
-const display = Fraunces({
+const display = Space_Grotesk({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+  weight: ["500", "600", "700"],
 });
 
-const mono = IBM_Plex_Mono({
+const mono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
 
-const body = Public_Sans({
+const body = Inter({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "TrialScope AI",
-  description: "Clinical trial intelligence and protocol analysis platform",
+  title: "CRAP — Comprehensive Review and Analysis Platform",
+  description:
+    "Clinical trial intelligence and protocol analysis platform. Comprehensive Review and Analysis Platform.",
 };
 
 export default function RootLayout({

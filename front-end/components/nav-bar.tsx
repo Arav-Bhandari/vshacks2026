@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, Search, Upload, History } from "lucide-react";
+import { Search, Upload, History } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -16,13 +16,12 @@ export function NavBar() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-canvas/85 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2 group">
-          <Activity
-            className="h-5 w-5 text-accent transition-transform duration-200 group-hover:scale-110"
-            strokeWidth={2.25}
-          />
-          <span className="font-display text-lg tracking-tight">
-            TrialScope <span className="italic text-accent">AI</span>
+        <Link href="/" className="flex items-baseline gap-2">
+          <span className="font-display text-xl font-bold tracking-tight text-ink">
+            CRAP
+          </span>
+          <span className="hidden font-mono text-[10px] uppercase tracking-[0.16em] text-ink-muted sm:inline">
+            Comprehensive Review &amp; Analysis Platform
           </span>
         </Link>
         <nav className="flex items-center gap-1">
@@ -34,7 +33,7 @@ export function NavBar() {
                 key={href}
                 href={href}
                 className={cn(
-                  "flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200",
+                  "flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium transition-colors duration-150",
                   active
                     ? "bg-accent-soft text-accent"
                     : "text-ink-muted hover:text-ink hover:bg-accent-soft/50",

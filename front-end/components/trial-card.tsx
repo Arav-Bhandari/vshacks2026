@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 
 export function TrialCard({ trial }: { trial: Trial }) {
   return (
-    <Card className="p-5 flex flex-col gap-3 transition-all duration-200 hover:border-accent/40 hover:shadow-md">
+    <Card className="p-5 flex flex-col gap-3 transition-[border-color,box-shadow] duration-150 hover:border-accent/40 hover:shadow-md">
       <div className="flex items-start justify-between gap-3">
         <h3 className="font-display text-base leading-snug text-ink">
           {trial.title}
@@ -35,7 +35,7 @@ export function TrialCard({ trial }: { trial: Trial }) {
         </div>
       )}
 
-      <div className="mt-1 flex items-center gap-4 text-xs text-ink-muted font-mono">
+      <div className="mt-1 flex items-center gap-4 text-xs text-ink-muted font-mono tabular-nums">
         <span className="flex items-center gap-1">
           <Users className="h-3.5 w-3.5" /> {trial.enrollment ?? "?"} pts
         </span>

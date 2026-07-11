@@ -53,15 +53,15 @@ export default function HomePage() {
       <section className="border-b border-border">
         <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
-            Trial intelligence, instantly
+            Comprehensive review and analysis platform
           </p>
-          <h1 className="mt-4 max-w-2xl font-display text-4xl leading-[1.1] tracking-tight sm:text-5xl">
+          <h1 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl">
             Search the trial landscape and{" "}
-            <span className="italic text-accent">de-risk your protocol</span>{" "}
+            <span className="text-accent">de-risk your protocol</span>{" "}
             before you write it.
           </h1>
           <p className="mt-5 max-w-xl text-ink-muted">
-            Query thousands of registered studies in plain English, or upload
+            Query 591,000 registered studies in plain English, or upload
             a draft protocol for automated benchmarking, burden scoring, and
             FDA compliance review.
           </p>
@@ -91,7 +91,7 @@ export default function HomePage() {
                     : "e.g. what phase 2 trials target relapsed AML with fewer than 100 patients?"
                 }
                 aria-label="Search clinical trials"
-                className="h-12 flex-1 rounded-md border border-border bg-surface px-4 text-sm text-ink placeholder:text-ink-muted/70 focus:border-accent transition-colors duration-200"
+                className="h-12 flex-1 rounded-md border border-border bg-surface px-4 text-sm text-ink placeholder:text-ink-muted/70 focus:border-accent transition-colors duration-150"
               />
               <Button type="submit" size="lg" disabled={loading}>
                 {loading ? "Searching…" : "Search"}
@@ -128,12 +128,12 @@ export default function HomePage() {
 
         {!loading && trials && trials.length === 0 && (
           <p className="text-sm text-ink-muted">
-            No trials matched that query. Try broadening your search.
+            Nothing matched. Even 591,000 trials have their limits.
           </p>
         )}
 
         {!loading && trials && trials.length > 0 && (
-          <div className="grid animate-fade-up gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="stagger grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {trials.map((t) => (
               <TrialCard key={t.nct_id} trial={t} />
             ))}
@@ -142,7 +142,7 @@ export default function HomePage() {
 
         {!loading && !searched && !error && (
           <p className="text-sm text-ink-muted">
-            Results will appear here once you search.
+            Nothing to show yet. Type something up there.
           </p>
         )}
       </section>
@@ -166,7 +166,8 @@ function ModeButton({
       type="button"
       onClick={onClick}
       className={cn(
-        "flex items-center gap-1.5 rounded px-3 py-1.5 text-xs font-medium transition-colors duration-200",
+        "flex items-center gap-1.5 rounded px-3 py-1.5 text-xs font-medium",
+        "transition-[color,background-color,transform] duration-150 ease-out active:scale-[0.97]",
         active ? "bg-accent text-accent-ink" : "text-ink-muted hover:text-ink",
       )}
     >

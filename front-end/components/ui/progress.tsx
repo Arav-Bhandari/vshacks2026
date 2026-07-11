@@ -24,8 +24,11 @@ export function Progress({
       )}
     >
       <div
-        className={cn("h-full rounded-full transition-all duration-500 ease-out", bar)}
-        style={{ width: `${pct}%` }}
+        className={cn("h-full w-full origin-left rounded-full", bar)}
+        style={{
+          transform: `scaleX(${pct / 100})`,
+          transition: "transform 400ms var(--ease-out)",
+        }}
       />
     </div>
   );

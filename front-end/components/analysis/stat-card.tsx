@@ -38,7 +38,7 @@ export function StatCard({
           <Icon className={cn("h-4 w-4", toneText)} strokeWidth={2} />
         </span>
       </div>
-      <p className="mt-3 font-display text-3xl tracking-tight text-ink">
+      <p className="mt-3 font-display text-3xl tracking-tight text-ink tabular-nums">
         {value}
       </p>
       {sub && <p className="mt-1 text-xs text-ink-muted">{sub}</p>}

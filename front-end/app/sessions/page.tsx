@@ -56,29 +56,33 @@ export default function SessionsPage() {
 
         {sessions && sessions.length === 0 && (
           <p className="text-sm text-ink-muted">
-            No sessions yet. Upload a protocol to get started.
+            Nothing here. The platform can only review what you upload.
           </p>
         )}
 
-        {sessions?.map((s) => (
-          <Link key={s.session_id} href={`/protocol/${s.session_id}/analysis`}>
-            <Card className="flex items-center justify-between gap-4 p-4 transition-colors duration-200 hover:border-accent/40">
-              <div className="flex items-center gap-3 min-w-0">
-                <FileText className="h-5 w-5 shrink-0 text-ink-muted" />
-                <div className="min-w-0">
-                  <p className="truncate font-medium text-ink">{s.filename}</p>
-                  <p className="font-mono text-xs text-ink-muted">
-                    {new Date(s.created_at).toLocaleString()}
-                  </p>
-                </div>
-              </div>
-              <div className="flex shrink-0 items-center gap-3">
-                <Badge tone={STATUS_TONE[s.status]}>{s.status}</Badge>
-                <ChevronRight className="h-4 w-4 text-ink-muted" />
-              </div>
-            </Card>
-          </Link>
-        ))}
+        {sessions && sessions.length > 0 && (
+          <div className="stagger flex flex-col gap-3">
+            {sessions.map((s) => (
+              <Link key={s.session_id} href={`/protocol/${s.session_id}/analysis`}>
+                <Card className="pressable flex items-center justify-between gap-4 p-4 transition-colors duration-150 hover:border-accent/40">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <FileText className="h-5 w-5 shrink-0 text-ink-muted" />
+                    <div className="min-w-0">
+                      <p className="truncate font-medium text-ink">{s.filename}</p>
+                      <p className="font-mono text-xs text-ink-muted tabular-nums">
+                        {new Date(s.created_at).toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-3">
+                    <Badge tone={STATUS_TONE[s.status]}>{s.status}</Badge>
+                    <ChevronRight className="h-4 w-4 text-ink-muted" />
+                  </div>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -77,9 +77,10 @@ export default function UploadPage() {
         tabIndex={0}
         onKeyDown={(e) => e.key === "Enter" && inputRef.current?.click()}
         className={cn(
-          "mt-10 flex cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed px-6 py-16 text-center transition-colors duration-200",
+          "mt-10 flex cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed px-6 py-16 text-center",
+          "transition-[border-color,background-color,transform] duration-150 ease-out",
           dragging
-            ? "border-accent bg-accent-soft"
+            ? "scale-[1.01] border-accent bg-accent-soft"
             : "border-border bg-surface hover:border-accent/50",
         )}
       >

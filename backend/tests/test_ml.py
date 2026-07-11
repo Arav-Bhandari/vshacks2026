@@ -2,7 +2,7 @@ import pytest
 
 pytest.importorskip("xgboost")
 
-from app.ml.features import FEATURE_ORDER, trial_row_features, usdm_features
+from app.ml.features import FEATURE_ORDER, STRUCT_FEATURES, trial_row_features, usdm_features
 from app.ml.train import train
 from app.ml.predictor import predict_duration_risk
 
@@ -18,7 +18,6 @@ USDM = {
             {"level": "primary", "endpoints": ["e1"]},
             {"level": "secondary", "endpoints": ["e2", "e3"]},
         ],
-        "scheduleOfActivities": {"visits": [{}] * 5},
         "design": {"allocation": "randomized", "masking": "double"},
         "conditions": ["cond1"],
         "interventions": ["drug1", "drug2"],
@@ -35,15 +34,18 @@ TRIAL_ROW = {
     "allocation": "randomized",
     "masking": "double",
     "conditions": "cond1",
-    "interventions": "drug1; drug2",
+    "interventions": "DRUG: drug1; DRUG: drug2",
+    "sponsor": "State University",
+    "start_date": "2015-01-01",
 }
 
 
 def test_features_same_keys_and_order():
     f1 = usdm_features(USDM)
     f2 = trial_row_features(TRIAL_ROW)
-    assert list(f1.keys()) == FEATURE_ORDER
-    assert list(f2.keys()) == FEATURE_ORDER
+    assert list(f1.keys()) == STRUCT_FEATURES
+    assert list(f2.keys()) == STRUCT_FEATURES
+    assert len(FEATURE_ORDER) == len(STRUCT_FEATURES) + 384
 
 
 def test_train_and_predict(tmp_path, monkeypatch):
@@ -54,8 +56,9 @@ def test_train_and_predict(tmp_path, monkeypatch):
     monkeypatch.setattr(predictor_mod, "MODELS_DIR", tmp_path)
     predictor_mod._cache.clear()
 
-    meta = train()
+    meta = train(quick=True)
     assert meta["n_rows"] > 0
+    assert meta["synthetic"] is True
 
     result = predict_duration_risk(USDM, baseline={"expected_duration_months": 18})
 

@@ -6,7 +6,7 @@ type Size = "sm" | "md" | "lg";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-accent text-accent-ink hover:opacity-90 shadow-sm shadow-black/5",
+    "bg-accent text-accent-ink hover:brightness-105 shadow-sm shadow-black/10",
   secondary:
     "bg-surface-raised text-ink border border-border hover:bg-accent-soft",
   ghost: "text-ink hover:bg-accent-soft",
@@ -29,7 +29,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     <button
       ref={ref}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none",
+        "inline-flex items-center justify-center gap-2 rounded-md font-medium",
+        "transition-[background-color,border-color,transform,filter] duration-150 ease-out",
+        "active:scale-[0.97]",
+        "disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100",
         variants[variant],
         sizes[size],
         className,

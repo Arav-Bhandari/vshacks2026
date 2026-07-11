@@ -160,8 +160,10 @@ cp backend/app/.env.example backend/app/.env
 # add ANTHROPIC_API_KEY to backend/app/.env
 echo "NEXT_PUBLIC_API_URL=http://localhost:8000" > front-end/.env.local
 
-# 4. Train ML model
-.venv/bin/python backend/app/ml/create_demo_models.py
+# 4. Train ML model (full run needs a GPU box or ~30 min CPU)
+cd backend && ../.venv/bin/python -m app.ml.train
+# EMB_DEVICE=cuda|mps|cpu overrides encoder device; embeddings
+# cache to backend/app/ml/models/ so reruns resume
 
 # 5. Backend (Terminal 1)
 cd backend && ../.venv/bin/python -m uvicorn app.main:app --reload --port 8000
