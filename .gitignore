@@ -17,3 +17,4 @@ venv/
 fda/**/*.pdf
 mcp-server/dist/
 mcp-server/node_modules/
+backend/app/database/.fetch_token*
