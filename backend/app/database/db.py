@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS trials (
 );
 CREATE VIRTUAL TABLE IF NOT EXISTS trials_fts USING fts5(
     nct_id UNINDEXED, title, conditions, interventions,
-    primary_outcomes, content=''
+    primary_outcomes
 );
 CREATE TABLE IF NOT EXISTS sessions (
     session_id TEXT PRIMARY KEY,
@@ -79,6 +79,10 @@ def upsert_trials(rows: list[dict]):
             f"INSERT OR REPLACE INTO trials ({','.join(cols)}) "
             f"VALUES ({','.join('?' * len(cols))})",
             [tuple(r.get(c) for c in cols) for r in rows],
+        )
+        db.executemany(
+            "DELETE FROM trials_fts WHERE nct_id = ?",
+            [(r["nct_id"],) for r in rows],
         )
         db.executemany(
             "INSERT INTO trials_fts (nct_id, title, conditions, interventions, "
