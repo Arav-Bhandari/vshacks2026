@@ -125,7 +125,7 @@ Open **http://localhost:3000**. Interactive API docs are at **http://localhost:8
 | Integration | Model Context Protocol server (TypeScript), CDISC USDM v3.0 export |
 | Data | ClinicalTrials.gov (591K+ studies), FDA guidance PDFs |
 
-> **A note on model accuracy:** the duration model trains on 556K completed trials with a holdout R² of 0.12 — real-world trial duration depends heavily on factors outside protocol design. Predictions are directional, and each ships with SHAP attributions explaining it.
+> **A note on model accuracy:** the duration model trains on 556K completed trials with a holdout R² of about 0.3 — real-world trial duration depends heavily on factors outside protocol design. Predictions are directional, and each ships with SHAP attributions explaining it.
 
 ## Repository Layout
 
