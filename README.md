@@ -1,248 +1,173 @@
-# CRAP - Comprehensive Review and Analysis Platform
+# CRAP
 
-**License**: MIT (Open Source)
+**Comprehensive Review and Analysis Platform** — an AI-powered tool for analyzing and improving clinical trial protocols. Upload a Phase II–III protocol PDF; CRAP structures it into CDISC USDM, benchmarks it against 591K+ historical trials, checks it against FDA guidance, predicts duration risk, and regenerates an improved draft you can export as USDM JSON/XML.
 
----
+## Table of Contents
 
-## Elevator Pitch
+- [Overview](#overview)
+- [How It Works](#how-it-works)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Tech Stack](#tech-stack)
+- [Repository Layout](#repository-layout)
+- [Development](#development)
+- [License](#license)
+- [Credits](#credits)
 
-**Your AI-driven clinical trial intelligence platform that reviews, benchmarks, and regenerates protocol drafts into USDM-ready, FDA-aligned docs: Reducing amendments, delays, and cost overruns.**
+## Overview
 
----
+CRAP takes an unstructured clinical trial protocol document and turns it into structured, benchmarked, regulator-aligned output. It combines:
 
-## Inspiration
+| Capability | What it gives you |
+|---|---|
+| USDM conversion | Machine-readable CDISC USDM v3.0 (endpoints, arms, eligibility, Schedule of Activities) |
+| Trial benchmarking | Duration, enrollment, and burden baselines from the most similar historical trials |
+| Burden analysis | Rule-based scoring of complexity, recruitment difficulty, and patient burden |
+| Risk prediction | XGBoost duration-overrun model with per-prediction SHAP explanations |
+| FDA compliance | Gap analysis against a library of 12 real FDA guidance PDFs |
+| Protocol optimization | AI-regenerated, citation-linked draft with regulatory alignment |
+| Trial search | Natural-language search over 591K+ trials, plus an MCP server for external clients |
 
-The members of the CRAP team came in with all but a singular question:
+## How It Works
 
-"_Why do SO MANY promising discoveries at the bench fail to reach the patients at the bedside?_"
+The backend runs an eight-stage asynchronous pipeline, streaming progress to the frontend over WebSockets:
 
-In fact, roughly **9 in 10** clinical developments **fail** between starting Phase I trials and receiving regulatory approval. While many of these failures stem from biological uncertainty, a surprisingly large proportion are lost not in the lab, but in clinical trial design and operations.
-
-While wet-lab innovation races ahead, trial design still lives in sprawling word documents/PDFs - **Even at leading biopharma companies**. These protocols span hundreds of pages, presenting scattered trial design information.
-When foundational design choices are made inside such unstructured, manual systems, **trials become vulnerable to avoidable operational risks**: misaligned endpoints, impractical timelines, or regulatory gaps that can compromise even the most promising science.
-
-_The result?_ **Delayed trials, avoidable amendments, and millions of dollars in wasted effort.**
-
-**Enter CRAP.**
-_Our mission?_ Controlling the controllables, by **making clinical trial design as intelligent as the science it tests**, narrowing the chasm between therapeutic discovery and approval.
-
----
-
-## What it does
-
-CRAP transforms messy, unstructured trial drafts into structured and regulator-aligned designs, followed by regenerating improved versions using AI.
-
-### Core Workflow
-
-1. **Upload** any Phase II-III trial draft PDF doc.
-2. **Convert** it into a machine-readable USDM structure (Schedule of Activities, endpoints, arms, eligibility, etc.)
-3. **Generate insights** on factors that may slow down trial progress using data from **591K+ historical clinical studies**, benchmarking performance metrics such as duration, procedural burden, and amendment likelihood.
-4. **Identify missing regulatory elements** by cross-referencing FDA guidance documents, while highlighting compliance gaps and potential design inefficiencies.
-5. **Benchmark trial performance** against studies of similar drugs, mechanisms, and phases, providing justification on how design choices (e.g., endpoints, visit frequency, population scope) align with successful precedents.
-6. **Regenerate** an improved, citation-linked draft and export it as USDM-ready JSON/XML for CRO or CTMS integration.
-
-### Key Features
-
-#### Protocol Intelligence System
-- **PDF Processing**: Automatic PDF to Markdown to USDM conversion using Claude
-- **Similar Trials Discovery**: Find up to 50 similar trials from 591K+ studies
-- **Similarity Scoring**: Multi-factor semantic analysis (condition 35%, phase 20%, endpoints 25%, design 20%)
-- **Baseline Metrics**: Weighted aggregation from top-K most similar trials for realistic benchmarking
-- **Burden Analysis**: Rule-based complexity, recruitment difficulty, and patient burden scoring
-- **ML Predictions**: XGBoost model with SHAP explainability for duration overrun risk
-- **FDA Compliance**: AI-powered regulatory guidance analysis using actual FDA PDF documents
-- **Protocol Optimization**: AI-powered regeneration with citations and regulatory alignment
-- **USDM Export**: Industry-standard CDISC format export (JSON and XML)
-
-#### Natural Language Trial Search
-- Query 591K+ clinical trials using natural language powered by Claude with tool use
-- MCP server exposing the same trial database to any MCP-compatible client
-- Live ClinicalTrials.gov API fallback
-
----
-
-## Architecture
+1. **Parse** — extract text from the uploaded protocol PDF (hybrid PyMuPDF + pdfplumber, no OCR)
+2. **Convert** — transform the extracted text into USDM JSON with Claude
+3. **Match** — find comparable trials via sentence-transformer embeddings and four-factor scoring (condition 35%, endpoints 25%, phase 20%, design 20%)
+4. **Baseline** — aggregate weighted benchmark metrics from the top matches
+5. **Assess** — score participant burden and recruitment difficulty
+6. **Predict** — estimate duration-overrun risk with XGBoost and explain it with SHAP
+7. **Check** — two-stage FDA compliance analysis (Haiku selects relevant guidance documents, Sonnet performs the gap analysis)
+8. **Optimize** — regenerate an improved protocol draft with Claude extended thinking, exportable as USDM JSON/XML
 
 ```
 +------------------------------------------------------------+
 |                   Frontend (Next.js)                        |
 |   Trial Search | Protocol Upload | Analysis Dashboard       |
-|     Real-time progress via WebSockets (polling fallback)    |
 +---------------------------+--------------------------------+
-                            | HTTP/REST + WebSockets
+                            | REST + WebSockets
                             v
 +------------------------------------------------------------+
-|                  Backend API (FastAPI)                       |
-|   Claude | SQLite FTS5 | ML Models | FDA Guidance | SHAP    |
-|   Async pipeline | Session persistence | WS progress        |
+|                  Backend (FastAPI)                          |
+|   8-stage async pipeline | Claude | ML models | Sessions    |
 +---------------------------+--------------------------------+
                             |
                             v
 +------------------------------------------------------------+
-|              Data Layer & External Services                  |
-|  591K Trials (SQLite) | FDA Guidance PDFs | ClinicalTrials.gov|
+|                       Data Layer                            |
+| SQLite (591K trials, FTS5) | FDA PDFs | ClinicalTrials.gov  |
 +------------------------------------------------------------+
 ```
 
-### Technology Stack
+## Getting Started
 
-#### Backend (Python/FastAPI)
-- **FastAPI** - async web framework with automatic API documentation
-- **Claude (Anthropic API)** - USDM conversion, FDA analysis, protocol optimization, NL search
-- **SQLite + FTS5** - 591K+ trials from ClinicalTrials.gov, full-text search, zero-install
-- **sentence-transformers** - semantic similarity (all-MiniLM-L6-v2, 384-dim embeddings)
-- **XGBoost + SHAP** - duration prediction with TreeExplainer attributions
-- **PyMuPDF + pdfplumber** - hybrid PDF text extraction (no OCR)
-- **WebSockets** - real-time progress updates with HTTP polling fallback
+### Requirements
 
-#### Frontend (Next.js/TypeScript)
-- **Next.js App Router** + **TypeScript strict**
-- **Tailwind CSS**, hand-rolled shadcn-style primitives
-- **Recharts** - burden charts, risk gauges, SHAP plots, benchmark CIs
-- **Lucide React** icons
-
-#### AI & ML Infrastructure
-- **Model Context Protocol (MCP)** - TypeScript MCP server for trial discovery
-- **CDISC USDM v3.0** - industry-standard clinical study data model export
-- **FDA Guidance Library** - 12 real FDA PDFs (general, oncology, genetics)
-
-### Pipeline
-
-PDF parse -> USDM conversion (Claude) -> similar trials (semantic 4-factor scoring) -> weighted baseline benchmarks -> burden analysis -> ML duration/risk prediction with SHAP -> FDA compliance (two-stage: Haiku document selection, Sonnet gap analysis) -> optimized protocol draft (Claude extended thinking) -> USDM JSON/XML export.
-
----
-
-## Project Structure
-
-```
-.
-├── backend/
-│   ├── app/
-│   │   ├── database/         # SQLite layer, ClinicalTrials.gov fetcher
-│   │   ├── services/         # PDF parser, USDM converter, similarity,
-│   │   │                     # burden, baseline, FDA analyzer, optimizer
-│   │   ├── ml/               # features, training, XGBoost+SHAP predictor
-│   │   ├── routes/           # REST endpoints, WebSocket handler
-│   │   ├── pipeline.py       # 8-stage analysis orchestrator
-│   │   └── main.py           # FastAPI entrypoint
-│   ├── tests/                # pytest suites (services, ML, FDA, API)
-│   └── data/uploads/         # uploaded protocol PDFs
-├── database/
-│   ├── clinical_trials.db    # 591K trials (generated, gitignored)
-│   └── setup_database.sh     # venv + deps + full data load
-├── front-end/                # Next.js app (search, upload, dashboard)
-├── mcp-server/               # TypeScript MCP server (3 trial tools)
-├── fda/                      # FDA guidance PDFs + manifest.json
-├── scripts/fetch_fda.sh      # re-download guidance PDFs from manifest
-└── docs/backend/             # architecture notes
-```
-
----
-
-## Quick Start
-
-### Prerequisites
 - Python 3.12+
 - Node.js 18+
-- Anthropic API key
+- An Anthropic API key
 
-### Installation
+### Setup
 
 ```bash
-# 1. Database + dependencies (fetches 591K trials, takes a while)
+# Database + Python dependencies (downloads 591K trials; takes a while)
 bash database/setup_database.sh
 
-# 2. FDA guidance PDFs
+# FDA guidance PDFs
 bash scripts/fetch_fda.sh
 
-# 3. Environment
-cp backend/app/.env.example backend/app/.env
-# add ANTHROPIC_API_KEY to backend/app/.env
+# Environment variables
+cp backend/app/.env.example backend/app/.env   # then add ANTHROPIC_API_KEY
 echo "NEXT_PUBLIC_API_URL=http://localhost:8000" > front-end/.env.local
 
-# 4. Train ML model (full run needs a GPU box or ~30 min CPU)
+# ML model (full training run: GPU box or ~30 min on CPU;
+# EMB_DEVICE=cuda|mps|cpu overrides the encoder device, and
+# embeddings cache to backend/app/ml/models/ so reruns resume)
 cd backend && ../.venv/bin/python -m app.ml.train
-# EMB_DEVICE=cuda|mps|cpu overrides encoder device; embeddings
-# cache to backend/app/ml/models/ so reruns resume
+```
 
-# 5. Backend (Terminal 1)
+### Run
+
+```bash
+# Terminal 1 — backend
 cd backend && ../.venv/bin/python -m uvicorn app.main:app --reload --port 8000
 
-# 6. Frontend (Terminal 2)
+# Terminal 2 — frontend
 cd front-end && npm install && npm run dev
 ```
 
-Visit **http://localhost:3000**. API docs at **http://localhost:8000/docs**.
+Open **http://localhost:3000**. Interactive API docs are at **http://localhost:8000/docs**.
 
-### MCP server (optional)
+## Usage
 
-```bash
-cd mcp-server && npm install && npm run build
+- **Analyze a protocol** — upload a Phase II–III protocol PDF from the dashboard and watch the pipeline stages complete in real time; results include benchmarks, burden scores, risk prediction, compliance gaps, and the optimized draft
+- **Search trials** — query the trial database with keywords or plain English from the search page
+- **Export** — download the analyzed or optimized protocol as USDM v3.0 JSON or XML for CRO/CTMS integration
+- **MCP server (optional)** — expose the trial database to any MCP-compatible client:
+
+  ```bash
+  cd mcp-server && npm install && npm run build
+  # register node mcp-server/dist/index.js in your MCP client config
+  ```
+
+  See [mcp-server/README.md](mcp-server/README.md) for tool details.
+
+## Tech Stack
+
+| Layer | Technologies |
+|---|---|
+| Backend | FastAPI, Python 3.12, SQLite + FTS5, WebSockets |
+| AI | Claude (Anthropic API): USDM conversion, FDA analysis, optimization, NL search |
+| ML | sentence-transformers (all-MiniLM-L6-v2), XGBoost, SHAP |
+| PDF | PyMuPDF, pdfplumber |
+| Frontend | Next.js (App Router), TypeScript strict, Tailwind CSS, Recharts, Lucide |
+| Integration | Model Context Protocol server (TypeScript), CDISC USDM v3.0 export |
+| Data | ClinicalTrials.gov (591K+ studies), FDA guidance PDFs |
+
+> **A note on model accuracy:** the duration model trains on 556K completed trials with a holdout R² of 0.12 — real-world trial duration depends heavily on factors outside protocol design. Predictions are directional, and each ships with SHAP attributions explaining it.
+
+## Repository Layout
+
+```
+backend/app/database/    SQLite layer, ClinicalTrials.gov fetcher
+backend/app/services/    PDF parser, USDM converter, similarity, burden,
+                         baseline, FDA analyzer, optimizer
+backend/app/ml/          features, training, XGBoost+SHAP predictor
+backend/app/routes/      REST endpoints, WebSocket handler
+backend/app/pipeline.py  8-stage analysis orchestrator
+backend/tests/           pytest suites (services, ML, FDA, API)
+database/                trial DB (generated) + setup script
+front-end/               Next.js app (search, upload, dashboard)
+mcp-server/              TypeScript MCP server (3 trial tools)
+fda/                     FDA guidance PDFs + manifest.json
+scripts/                 FDA PDF fetch script
+docs/backend/            architecture notes
 ```
 
-Register `node mcp-server/dist/index.js` in any MCP client config; see mcp-server/README.md.
+## Development
 
----
-
-## Performance
-
-- PDF parsing: seconds, no OCR (hybrid PyMuPDF + pdfplumber)
-- Keyword search over 591K trials: <100ms (SQLite FTS5)
-- Similarity scoring: single batched sentence-transformer encode over candidates
-- ML prediction + SHAP: <1s
-- Full pipeline: minutes end to end, dominated by Claude stages; progress streamed live
-
-**Honest metrics**: the XGBoost duration model trains on 556K real completed trials; holdout R² is 0.12 - real-world trial duration is dominated by factors outside protocol design, so predictions are directional and every one ships with SHAP attributions explaining it.
-
----
-
-## Testing
+Run the test suites before opening a PR:
 
 ```bash
-cd backend
-../.venv/bin/python -m pytest tests/ -v
+# Backend
+cd backend && ../.venv/bin/python -m pytest tests/ -v
 
-# frontend
-cd front-end
-npx tsc --noEmit && npm run build
+# Frontend
+cd front-end && npx tsc --noEmit && npm run build
 
-# mcp server smoke test
+# MCP server
 cd mcp-server && node scripts/smoke.mjs
 ```
 
----
+Conventions: PEP 8 for Python, TypeScript strict mode, tests for new features, no emojis in code. More detail in [CLAUDE.md](CLAUDE.md) and [docs/backend/architecture.md](docs/backend/architecture.md).
 
-## Documentation
-
-- **[CLAUDE.md](CLAUDE.md)** - development commands and guidance
-- **[docs/backend/architecture.md](docs/backend/architecture.md)** - module map and pipeline detail
-- **API Docs**: http://localhost:8000/docs (FastAPI auto-generated)
-
----
-
-## Contributing
-
-Contributions welcome. This is an open-source project under MIT license.
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes with tests
-4. Run the test suite
-5. Open a Pull Request
-
-**Development guidelines**: PEP 8 for Python, TypeScript strict mode, tests for new features, comments only when necessary (one line, 60 chars max), no emojis in code.
-
----
+Contributions are welcome — fork, branch, change, test, and open a pull request.
 
 ## License
 
-MIT License - see [LICENSE](LICENSE).
+Released under the MIT License. See [LICENSE](LICENSE).
 
----
+## Credits
 
-## Acknowledgments
-
-- **Anthropic** - Claude API for AI processing
-- **ClinicalTrials.gov** - public clinical trials registry (591K+ studies loaded)
-- **CDISC** - USDM v3.0 standard for clinical study data
-- **FDA** - public guidance documents enabling regulatory intelligence
+Built on the Claude API by [Anthropic](https://www.anthropic.com), public registry data from [ClinicalTrials.gov](https://clinicaltrials.gov), the [CDISC](https://www.cdisc.org) USDM v3.0 standard, and public [FDA](https://www.fda.gov) guidance documents.
