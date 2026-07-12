@@ -103,7 +103,7 @@ export function TabsList({
       {indicator && (
         <span
           aria-hidden
-          className="pointer-events-none absolute bottom-[-1px] left-0 h-0.5 bg-accent rounded-full transition-transform duration-200"
+          className="pointer-events-none absolute bottom-[-1px] left-0 h-0.5 bg-accent rounded-full transition-[transform,width] duration-200"
           style={{
             width: indicator.w,
             transform: `translateX(${indicator.x}px)`,
