@@ -69,7 +69,7 @@ _CHUNK = 20000
 
 def embed_with_cache(nct_ids: list[str], texts: list[str]) -> np.ndarray:
     """Embeddings aligned to nct_ids; grow-only cache, resumable."""
-    cached_emb = np.zeros((0, EMB_DIM), dtype="float32")
+    cached_emb = None
     cached_ids: dict = {}
     if _EMB_PATH.exists() and _IDS_PATH.exists():
         cached_emb = np.load(_EMB_PATH)
@@ -82,7 +82,7 @@ def embed_with_cache(nct_ids: list[str], texts: list[str]) -> np.ndarray:
     for s in range(0, len(missing), _CHUNK):
         block = missing[s:s + _CHUNK]
         vecs = embed_texts([texts[i] for i in block])
-        cached_emb = np.vstack([cached_emb, vecs])
+        cached_emb = vecs if cached_emb is None else np.vstack([cached_emb, vecs])
         for i in block:
             cached_ids[nct_ids[i]] = len(cached_ids)
         ids_sorted = sorted(cached_ids, key=cached_ids.get)
@@ -90,5 +90,7 @@ def embed_with_cache(nct_ids: list[str], texts: list[str]) -> np.ndarray:
         np.save(_IDS_PATH, np.array(ids_sorted, dtype=object))
         print(f"embedded {len(cached_ids)} cached rows", flush=True)
 
+    if cached_emb is None:
+        return np.zeros((0, EMB_DIM), dtype="float32")
     idx = [cached_ids[nid] for nid in nct_ids]
     return cached_emb[idx]
