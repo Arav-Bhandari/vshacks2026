@@ -1,6 +1,6 @@
 # CRAP
 
-**Comprehensive Review and Analysis Platform** — an AI-powered tool for analyzing and improving clinical trial protocols. Upload a Phase II–III protocol PDF; CRAP structures it into CDISC USDM, benchmarks it against 591K+ historical trials, checks it against FDA guidance, predicts duration risk, and regenerates an improved draft you can export as USDM JSON/XML.
+**Comprehensive Review and Analysis Platform** — An AI assistant designed to analyze and sharpen your clinical trial protocols. Just upload a Phase II or III PDF, and the platform goes to work: structuring it into CDISC USDM, benchmarking it against over 591,000 historical trials, and ensuring compliance with FDA guidance. It also flags potential timeline risks and generates an optimized draft you can instantly export as USDM JSON or XML.
 
 ## Table of Contents
 
@@ -16,30 +16,32 @@
 
 ## Overview
 
-CRAP takes an unstructured clinical trial protocol document and turns it into structured, benchmarked, regulator-aligned output. It combines:
+CRAP turns messy, unstructured protocols into organized, benchmarked data that aligns with regulators.
 
-| Capability | What it gives you |
+The platform combines:
+
+| Capability | What it provides |
 |---|---|
-| USDM conversion | Machine-readable CDISC USDM v3.0 (endpoints, arms, eligibility, Schedule of Activities) |
-| Trial benchmarking | Duration, enrollment, and burden baselines from the most similar historical trials |
-| Burden analysis | Rule-based scoring of complexity, recruitment difficulty, and patient burden |
-| Risk prediction | XGBoost duration-overrun model with per-prediction SHAP explanations |
+| USDM conversion | Machine-readable CDISC USDM v3.0 model that captures your endpoints, study arms, eligibility criteria, and Schedule of Activities |
+| Trial benchmarking | Baseline metrics for duration, enrollment, and operational burden by analyzing the most similar historical trials. |
+| Burden analysis | Rule-based scores for complexity, recruitment difficulty, and overall patient burden. |
+| Risk prediction | XGBoost duration-overrun model paired with per-prediction SHAP explanations. |
 | FDA compliance | Gap analysis against a library of 12 real FDA guidance PDFs |
-| Protocol optimization | AI-regenerated, citation-linked draft with regulatory alignment |
-| Trial search | Natural-language search over 591K+ trials, plus an MCP server for external clients |
+| Protocol optimization | An AI-regenerated draft with every modification linked back to source citations. |
+| Trial search | Natural-language search over 591K+ trials, featuring a MCP server for external clients |
 
 ## How It Works
 
 The backend runs an eight-stage asynchronous pipeline, streaming progress to the frontend over WebSockets:
 
-1. **Parse** — extract text from the uploaded protocol PDF (hybrid PyMuPDF + pdfplumber, no OCR)
-2. **Convert** — transform the extracted text into USDM JSON with Claude
-3. **Match** — find comparable trials via sentence-transformer embeddings and four-factor scoring (condition 35%, endpoints 25%, phase 20%, design 20%)
-4. **Baseline** — aggregate weighted benchmark metrics from the top matches
-5. **Assess** — score participant burden and recruitment difficulty
-6. **Predict** — estimate duration-overrun risk with XGBoost and explain it with SHAP
-7. **Check** — two-stage FDA compliance analysis (Haiku selects relevant guidance documents, Sonnet performs the gap analysis)
-8. **Optimize** — regenerate an improved protocol draft with Claude extended thinking, exportable as USDM JSON/XML
+1. **Parse** — Extracts text from the uploaded protocol PDF using a hybrid PyMuPDF and pdfplumber (no OCR)
+2. **Convert** — Transforms the extracted text into structured USDM JSON model with Claude
+3. **Match** — Finds highly comparable historical trials via sentence-transformer embeddings and four-factor scoring (condition 35%, endpoints 25%, phase 20%, design 20%)
+4. **Baseline** — Aggregates weighted benchmark metrics from those top matched historical trials
+5. **Assess** — Scores participant burden and recruitment difficulty
+6. **Predict** — Estimates the duration-overrun risk using XGBoost backed by an explanation from SHAP
+7. **Check** — Conducts a two-stage FDA compliance analysis: Haiku selects relevant guidance documents, then Sonnet performs the gap analysis
+8. **Optimize** — Regenerates an improved protocol draft with Claude extended thinking, ready to export as USDM JSON/XML
 
 ```
 +------------------------------------------------------------+
