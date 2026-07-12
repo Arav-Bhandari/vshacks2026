@@ -15,7 +15,7 @@ export function OverviewTab({ session }: { session: Session }) {
           ml_prediction ? `${ml_prediction.predicted_duration_months.toFixed(1)} mo` : "—"
         }
         sub={
-          ml_prediction
+          ml_prediction?.baseline_duration_months != null
             ? `baseline ${ml_prediction.baseline_duration_months.toFixed(1)} mo`
             : "awaiting ML prediction"
         }

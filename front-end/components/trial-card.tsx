@@ -4,6 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 
 export function TrialCard({ trial }: { trial: Trial }) {
+  const conditions = trial.conditions
+    ? trial.conditions.split(", ").filter(Boolean)
+    : [];
   return (
     <Card className="p-5 flex flex-col gap-3 transition-[border-color,box-shadow] duration-150 hover:border-accent/40 hover:shadow-md">
       <div className="flex items-start justify-between gap-3">
@@ -25,9 +28,9 @@ export function TrialCard({ trial }: { trial: Trial }) {
         <ExternalLink className="h-3 w-3" />
       </a>
 
-      {trial.conditions?.length > 0 && (
+      {conditions.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
-          {trial.conditions.slice(0, 4).map((c) => (
+          {conditions.slice(0, 4).map((c) => (
             <Badge key={c} tone="neutral" className="normal-case">
               {c}
             </Badge>

@@ -16,7 +16,12 @@ import { StatCard } from "@/components/analysis/stat-card";
 import { Users, CalendarRange, Database } from "lucide-react";
 
 export function BenchmarksTab({ baseline }: { baseline: Baseline | null }) {
-  if (!baseline) {
+  if (
+    !baseline ||
+    baseline.expected_duration_months == null ||
+    baseline.ci_low == null ||
+    baseline.ci_high == null
+  ) {
     return (
       <p className="py-10 text-sm text-ink-muted">
         Benchmark data is not yet available for this protocol.
@@ -24,11 +29,12 @@ export function BenchmarksTab({ baseline }: { baseline: Baseline | null }) {
     );
   }
 
+  const { expected_duration_months, ci_low, ci_high } = baseline;
   const data = [
     {
       name: "Duration",
-      base: baseline.ci_low,
-      range: baseline.ci_high - baseline.ci_low,
+      base: ci_low,
+      range: ci_high - ci_low,
     },
   ];
 
@@ -37,14 +43,14 @@ export function BenchmarksTab({ baseline }: { baseline: Baseline | null }) {
       <div className="grid gap-4 sm:grid-cols-3">
         <StatCard
           label="Expected duration"
-          value={`${baseline.expected_duration_months.toFixed(1)} mo`}
-          sub={`95% CI ${baseline.ci_low.toFixed(1)}–${baseline.ci_high.toFixed(1)} mo`}
+          value={`${expected_duration_months.toFixed(1)} mo`}
+          sub={`95% CI ${ci_low.toFixed(1)}–${ci_high.toFixed(1)} mo`}
           icon={CalendarRange}
           tone="blue"
         />
         <StatCard
           label="Median enrollment"
-          value={`${baseline.median_enrollment}`}
+          value={`${baseline.median_enrollment ?? "—"}`}
           sub="patients across comparable trials"
           icon={Users}
           tone="accent"
@@ -71,7 +77,7 @@ export function BenchmarksTab({ baseline }: { baseline: Baseline | null }) {
               <CartesianGrid horizontal={false} stroke="var(--grid-line)" />
               <XAxis
                 type="number"
-                domain={[0, Math.ceil(baseline.ci_high + 4)]}
+                domain={[0, Math.ceil(ci_high + 4)]}
                 tick={{ fill: "var(--ink-muted)", fontSize: 12 }}
                 axisLine={{ stroke: "var(--border)" }}
                 tickLine={false}
@@ -107,7 +113,7 @@ export function BenchmarksTab({ baseline }: { baseline: Baseline | null }) {
                 barSize={28}
               />
               <ReferenceLine
-                x={baseline.expected_duration_months}
+                x={expected_duration_months}
                 stroke="var(--ink)"
                 strokeWidth={2}
                 label={{

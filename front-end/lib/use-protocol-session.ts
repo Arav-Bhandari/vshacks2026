@@ -33,7 +33,7 @@ export function useProtocolSession(sessionId: string) {
           const s = await api.getSession(sessionId);
           applySession(s);
         } catch {
-          // ponytail: transient poll failure, next tick retries
+          // transient poll failure; next tick retries
         }
       }, 3000);
     };

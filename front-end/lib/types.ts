@@ -10,11 +10,11 @@ export type Trial = {
   nct_id: string;
   title: string;
   phase: string;
-  conditions: string[];
-  interventions: string[];
-  primary_outcomes: string[];
-  enrollment: number;
-  duration_months: number;
+  conditions: string;
+  interventions: string;
+  primary_outcomes: string;
+  enrollment: number | null;
+  duration_months: number | null;
   sponsor: string;
   status: string;
   similarity?: Similarity;
@@ -60,14 +60,14 @@ export type Burden = {
 export type ShapFeature = {
   feature: string;
   impact: number;
-  direction: "increase" | "decrease" | string;
+  direction: "increases" | "decreases" | string;
   explanation: string;
 };
 
 export type MlPrediction = {
   predicted_duration_months: number;
   overrun_risk_pct: number;
-  baseline_duration_months: number;
+  baseline_duration_months: number | null;
   shap_top5: ShapFeature[];
 };
 
@@ -106,10 +106,10 @@ export type OptimizedProtocol = {
 };
 
 export type Baseline = {
-  expected_duration_months: number;
-  ci_low: number;
-  ci_high: number;
-  median_enrollment: number;
+  expected_duration_months: number | null;
+  ci_low: number | null;
+  ci_high: number | null;
+  median_enrollment: number | null;
   n_trials: number;
 };
 
@@ -146,12 +146,12 @@ export type HealthResponse = {
 };
 
 export const PIPELINE_STEPS = [
-  "Parse PDF",
-  "USDM conversion",
-  "Similar trials",
-  "Benchmarks",
-  "Burden",
-  "ML prediction",
-  "FDA compliance",
-  "Optimized draft",
+  { key: "parse", label: "Parse PDF" },
+  { key: "usdm", label: "USDM conversion" },
+  { key: "similar", label: "Similar trials" },
+  { key: "baseline", label: "Benchmarks" },
+  { key: "burden", label: "Burden" },
+  { key: "ml", label: "ML prediction" },
+  { key: "fda", label: "FDA compliance" },
+  { key: "optimize", label: "Optimized draft" },
 ] as const;

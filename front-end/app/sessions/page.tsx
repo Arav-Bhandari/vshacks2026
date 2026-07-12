@@ -70,7 +70,7 @@ export default function SessionsPage() {
                     <div className="min-w-0">
                       <p className="truncate font-medium text-ink">{s.filename}</p>
                       <p className="font-mono text-xs text-ink-muted tabular-nums">
-                        {new Date(s.created_at).toLocaleString()}
+                        {new Date(s.created_at.replace(" ", "T") + "Z").toLocaleString()}
                       </p>
                     </div>
                   </div>

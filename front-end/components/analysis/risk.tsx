@@ -38,7 +38,11 @@ export function RiskTab({ ml }: { ml: MlPrediction | null }) {
         <StatCard
           label="Predicted duration"
           value={`${ml.predicted_duration_months.toFixed(1)} mo`}
-          sub={`vs baseline ${ml.baseline_duration_months.toFixed(1)} mo`}
+          sub={
+            ml.baseline_duration_months != null
+              ? `vs baseline ${ml.baseline_duration_months.toFixed(1)} mo`
+              : undefined
+          }
           icon={Clock3}
           tone="blue"
         />
@@ -92,7 +96,7 @@ export function RiskTab({ ml }: { ml: MlPrediction | null }) {
                 {data.map((f) => (
                   <Cell
                     key={f.name}
-                    fill={f.direction === "increase" ? "var(--amber)" : "var(--accent)"}
+                    fill={f.direction === "increases" ? "var(--amber)" : "var(--accent)"}
                   />
                 ))}
               </Bar>
@@ -111,7 +115,7 @@ export function RiskTab({ ml }: { ml: MlPrediction | null }) {
               <span
                 className="mt-1 h-2 w-2 shrink-0 rounded-full"
                 style={{
-                  background: f.direction === "increase" ? "var(--amber)" : "var(--accent)",
+                  background: f.direction === "increases" ? "var(--amber)" : "var(--accent)",
                 }}
               />
               <p>
