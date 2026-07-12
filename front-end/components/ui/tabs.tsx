@@ -103,7 +103,7 @@ export function TabsList({
       {indicator && (
         <span
           aria-hidden
-          className="pointer-events-none absolute bottom-[-1px] left-0 h-0.5 bg-accent rounded-full transition-[transform,width] duration-200"
+          className="pointer-events-none absolute bottom-[-1px] left-0 h-0.5 bg-accent rounded-full transition-[transform,width] duration-200 motion-reduce:transition-none"
           style={{
             width: indicator.w,
             transform: `translateX(${indicator.x}px)`,
@@ -156,7 +156,7 @@ export function TabsContent({
   const { value: active } = useTabsContext();
   if (active !== value) return null;
   return (
-    <div role="tabpanel" className={cn("animate-fade-up", className)}>
+    <div role="tabpanel" className={cn("animate-fade", className)}>
       {children}
     </div>
   );

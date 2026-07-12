@@ -47,6 +47,8 @@ export function RadialGauge({
           dataKey="value"
           cornerRadius={6}
           isAnimationActive
+          animationDuration={700}
+          animationEasing="ease-out"
         />
         <text
           x="50%"

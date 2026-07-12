@@ -104,13 +104,21 @@ export function BenchmarksTab({ baseline }: { baseline: Baseline | null }) {
                     : [`${(value as number).toFixed(1)} mo`, "CI low"]
                 }
               />
-              <Bar dataKey="base" stackId="ci" fill="transparent" />
+              <Bar
+                dataKey="base"
+                stackId="ci"
+                fill="transparent"
+                animationDuration={600}
+                animationEasing="ease-out"
+              />
               <Bar
                 dataKey="range"
                 stackId="ci"
                 fill="var(--accent)"
                 radius={[4, 4, 4, 4]}
                 barSize={28}
+                animationDuration={600}
+                animationEasing="ease-out"
               />
               <ReferenceLine
                 x={expected_duration_months}

@@ -126,7 +126,7 @@ export default function UploadPage() {
         >
           {status === "uploading" ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin" /> Starting
+              <Loader2 className="h-4 w-4 animate-spin [animation-duration:600ms]" /> Starting
               analysis…
             </>
           ) : (

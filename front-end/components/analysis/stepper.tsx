@@ -57,7 +57,7 @@ export function PipelineStepper({ progress }: { progress: ProgressEvent | null }
                 ) : failed ? (
                   <X className="h-3 w-3" />
                 ) : active ? (
-                  <Loader2 className="h-3 w-3 animate-spin" />
+                  <Loader2 className="h-3 w-3 animate-spin [animation-duration:600ms]" />
                 ) : (
                   i + 1
                 )}

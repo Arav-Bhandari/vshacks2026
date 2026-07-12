@@ -126,7 +126,10 @@ body {
 
 /* generic press feedback for pressable elements */
 .pressable {
-  transition: transform 160ms var(--ease-out);
+  transition:
+    transform 160ms var(--ease-out),
+    border-color 150ms ease,
+    background-color 150ms ease;
 }
 
 .pressable:active {
@@ -148,6 +151,20 @@ body {
   animation: fade-up 320ms var(--ease-out) both;
 }
 
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* opacity-only, for frequent switches like tab panels */
+.animate-fade {
+  animation: fade 150ms var(--ease-out) both;
+}
+
 /* staggered entrance for card/list grids, decorative only */
 .stagger > * {
   opacity: 0;
@@ -161,15 +178,6 @@ body {
 .stagger > *:nth-child(5) { animation-delay: 160ms; }
 .stagger > *:nth-child(6) { animation-delay: 200ms; }
 .stagger > *:nth-child(n+7) { animation-delay: 240ms; }
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
-}
-
-.animate-pulse-dot {
-  animation: pulse-dot 1.4s ease-in-out infinite;
-}
 
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-up,

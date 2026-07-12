@@ -92,7 +92,13 @@ export function RiskTab({ ml }: { ml: MlPrediction | null }) {
                   "Impact",
                 ]}
               />
-              <Bar dataKey="impact" radius={[4, 4, 4, 4]} barSize={20}>
+              <Bar
+                dataKey="impact"
+                radius={[4, 4, 4, 4]}
+                barSize={20}
+                animationDuration={600}
+                animationEasing="ease-out"
+              >
                 {data.map((f) => (
                   <Cell
                     key={f.name}

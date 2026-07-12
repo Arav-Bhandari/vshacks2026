@@ -64,7 +64,7 @@ export default function SessionsPage() {
           <div className="stagger flex flex-col gap-3">
             {sessions.map((s) => (
               <Link key={s.session_id} href={`/protocol/${s.session_id}/analysis`}>
-                <Card className="pressable flex items-center justify-between gap-4 p-4 transition-colors duration-150 hover:border-accent/40">
+                <Card className="pressable flex items-center justify-between gap-4 p-4 hover:border-accent/40">
                   <div className="flex items-center gap-3 min-w-0">
                     <FileText className="h-5 w-5 shrink-0 text-ink-muted" />
                     <div className="min-w-0">
