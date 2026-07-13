@@ -44,7 +44,7 @@ CRAP transforms messy, unstructured trial drafts into structured and regulator-a
 ### Key Features
 
 #### Protocol Intelligence System
-- **PDF Processing**: Automatic PDF to Markdown to USDM conversion using Claude
+- **PDF Processing**: Automatic PDF to Markdown to USDM conversion using DeepSeek V4 Flash
 - **Similar Trials Discovery**: Find up to 50 similar trials from 591K+ studies
 - **Similarity Scoring**: Multi-factor semantic analysis (condition 35%, phase 20%, endpoints 25%, design 20%)
 - **Baseline Metrics**: Weighted aggregation from top-K most similar trials for realistic benchmarking
@@ -55,7 +55,7 @@ CRAP transforms messy, unstructured trial drafts into structured and regulator-a
 - **USDM Export**: Industry-standard CDISC format export (JSON and XML)
 
 #### Natural Language Trial Search
-- Query 591K+ clinical trials using natural language powered by Claude with tool use
+- Query 591K+ clinical trials using DeepSeek V4 Flash with tool use
 - MCP server exposing the same trial database to any MCP-compatible client
 - Live ClinicalTrials.gov API fallback
 
@@ -73,7 +73,7 @@ CRAP transforms messy, unstructured trial drafts into structured and regulator-a
                             v
 +------------------------------------------------------------+
 |                  Backend API (FastAPI)                       |
-|   Claude | SQLite FTS5 | ML Models | FDA Guidance | SHAP    |
+|DeepSeek V4| SQLite FTS5 | ML Models | FDA Guidance | SHAP  |
 |   Async pipeline | Session persistence | WS progress        |
 +---------------------------+--------------------------------+
                             |
@@ -88,7 +88,7 @@ CRAP transforms messy, unstructured trial drafts into structured and regulator-a
 
 #### Backend (Python/FastAPI)
 - **FastAPI** - async web framework with automatic API documentation
-- **Claude (Anthropic API)** - USDM conversion, FDA analysis, protocol optimization, NL search
+- **DeepSeek V4 Flash** - USDM conversion, FDA analysis, protocol optimization, NL search
 - **SQLite + FTS5** - 591K+ trials from ClinicalTrials.gov, full-text search, zero-install
 - **sentence-transformers** - semantic similarity (all-MiniLM-L6-v2, 384-dim embeddings)
 - **XGBoost + SHAP** - duration prediction with TreeExplainer attributions
@@ -108,7 +108,7 @@ CRAP transforms messy, unstructured trial drafts into structured and regulator-a
 
 ### Pipeline
 
-PDF parse -> USDM conversion (Claude) -> similar trials (semantic 4-factor scoring) -> weighted baseline benchmarks -> burden analysis -> ML duration/risk prediction with SHAP -> FDA compliance (two-stage: Haiku document selection, Sonnet gap analysis) -> optimized protocol draft (Claude extended thinking) -> USDM JSON/XML export.
+PDF parse -> USDM conversion (DeepSeek V3) -> similar trials (semantic 4-factor scoring) -> weighted baseline benchmarks -> burden analysis -> ML duration/risk prediction with SHAP -> FDA compliance (guidance selection and gap analysis) -> optimized protocol draft (DeepSeek V3) -> USDM JSON/XML export.
 
 ---
 
@@ -144,7 +144,7 @@ PDF parse -> USDM conversion (Claude) -> similar trials (semantic 4-factor scori
 ### Prerequisites
 - Python 3.12+
 - Node.js 18+
-- Anthropic API key
+- DeepSeek API key
 
 ### Installation
 
@@ -157,13 +157,15 @@ bash scripts/fetch_fda.sh
 
 # 3. Environment
 cp backend/app/.env.example backend/app/.env
-# add ANTHROPIC_API_KEY to backend/app/.env
+# add DEEPSEEK_API_KEY to backend/app/.env
 echo "NEXT_PUBLIC_API_URL=http://localhost:8000" > front-end/.env.local
 
-# 4. Train ML model (full run needs a GPU box or ~30 min CPU)
-cd backend && ../.venv/bin/python -m app.ml.train
-# EMB_DEVICE=cuda|mps|cpu overrides encoder device; embeddings
-# cache to backend/app/ml/models/ so reruns resume
+# 4. Deep-train the duration stack (GPU recommended)
+cd backend
+EMB_DEVICE=cuda TRAIN_DEVICE=cuda ../.venv/bin/python -m app.ml.train --deep
+# Optional right-censored AFT experiment using active studies
+TRAIN_DEVICE=cuda ../.venv/bin/python -m app.ml.survival --deep
+# Embeddings and versioned model/metadata artifacts are cached in app/ml/models/
 
 # 5. Backend (Terminal 1)
 cd backend && ../.venv/bin/python -m uvicorn app.main:app --reload --port 8000
@@ -190,9 +192,9 @@ Register `node mcp-server/dist/index.js` in any MCP client config; see mcp-serve
 - Keyword search over 591K trials: <100ms (SQLite FTS5)
 - Similarity scoring: single batched sentence-transformer encode over candidates
 - ML prediction + SHAP: <1s
-- Full pipeline: minutes end to end, dominated by Claude stages; progress streamed live
+- Full pipeline: minutes end to end, dominated by DeepSeek V3 stages; progress streamed live
 
-**Honest metrics**: the XGBoost duration model trains on 556K real completed trials; holdout R² is 0.12 - real-world trial duration is dominated by factors outside protocol design, so predictions are directional and every one ships with SHAP attributions explaining it.
+**Honest metrics**: training selects hyperparameters on expanding historical windows and reports an untouched mature-year test, a sponsor-held-out diagnostic, and the old random split separately. The authoritative row counts, raw/log R², MAE/RMSE, calibration, split manifest, data hash, and known snapshot limitations are written to `backend/app/ml/models/train_meta.json` on every run.
 
 ---
 
@@ -214,7 +216,7 @@ cd mcp-server && node scripts/smoke.mjs
 
 ## Documentation
 
-- **[CLAUDE.md](CLAUDE.md)** - development commands and guidance
+- **[Developer guide](CLAUDE.md)** - development commands and guidance
 - **[docs/backend/architecture.md](docs/backend/architecture.md)** - module map and pipeline detail
 - **API Docs**: http://localhost:8000/docs (FastAPI auto-generated)
 
@@ -242,7 +244,7 @@ MIT License - see [LICENSE](LICENSE).
 
 ## Acknowledgments
 
-- **Anthropic** - Claude API for AI processing
+- **DeepSeek** - DeepSeek V3 API for AI processing
 - **ClinicalTrials.gov** - public clinical trials registry (591K+ studies loaded)
 - **CDISC** - USDM v3.0 standard for clinical study data
 - **FDA** - public guidance documents enabling regulatory intelligence

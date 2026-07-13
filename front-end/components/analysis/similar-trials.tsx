@@ -11,6 +11,8 @@ const COMPONENTS: { key: keyof NonNullable<Trial["similarity"]>; label: string }
   { key: "design", label: "Design" },
 ];
 
+const asPercent = (score: number) => Math.round(score * 100);
+
 export function SimilarTrialsTab({ trials }: { trials: Trial[] | null }) {
   if (!trials || trials.length === 0) {
     return (
@@ -41,7 +43,7 @@ export function SimilarTrialsTab({ trials }: { trials: Trial[] | null }) {
               <Badge tone="accent">{t.phase}</Badge>
               {t.similarity && (
                 <span className="font-mono text-lg text-ink tabular-nums">
-                  {Math.round(t.similarity.total)}%
+                  {asPercent(t.similarity.total)}%
                 </span>
               )}
             </div>
@@ -53,9 +55,11 @@ export function SimilarTrialsTab({ trials }: { trials: Trial[] | null }) {
                 <div key={key}>
                   <div className="mb-1 flex items-center justify-between text-xs text-ink-muted">
                     <span>{label}</span>
-                    <span className="font-mono tabular-nums">{Math.round(t.similarity![key])}%</span>
+                    <span className="font-mono tabular-nums">
+                      {asPercent(t.similarity![key])}%
+                    </span>
                   </div>
-                  <Progress value={t.similarity![key]} />
+                  <Progress value={asPercent(t.similarity![key])} />
                 </div>
               ))}
             </div>

@@ -1,10 +1,8 @@
-"""Protocol optimization suggestions via Claude with extended thinking."""
+"""Generate protocol improvement suggestions."""
 import json
 
-from app.config import SONNET_MODEL
-from app.services.llm_utils import _parse_json_response, get_client
-
-THINKING = {"type": "enabled", "budget_tokens": 4000}
+from app.config import DEEPSEEK_MODEL
+from app.services.llm_utils import NON_THINKING, _parse_json_response, get_client
 
 
 def _format_trials(trials: list[dict]) -> str:
@@ -40,13 +38,14 @@ async def optimize_protocol(usdm: dict, similar_trials: list[dict], fda_analysis
     prompt = _build_prompt(usdm, similar_trials, fda_analysis, burden)
 
     async def ask(p: str) -> str:
-        response = await client.messages.create(
-            model=SONNET_MODEL,
-            max_tokens=16000,
-            thinking=THINKING,
+        response = await client.chat.completions.create(
+            model=DEEPSEEK_MODEL,
+            max_tokens=8000,
+            extra_body=NON_THINKING,
+            response_format={"type": "json_object"},
             messages=[{"role": "user", "content": p}],
         )
-        return "".join(b.text for b in response.content if b.type == "text")
+        return response.choices[0].message.content or ""
 
     raw = await ask(prompt)
     try:

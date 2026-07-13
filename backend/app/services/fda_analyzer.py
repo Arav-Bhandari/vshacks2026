@@ -1,11 +1,11 @@
-"""FDA compliance analysis against downloaded guidance documents."""
+"""Check a protocol against FDA guidance."""
 import json
 import re
 
 import fitz
 
-from app.config import FDA_DIR, HAIKU_MODEL, SONNET_MODEL
-from app.services.llm_utils import _parse_json_response, get_client
+from app.config import DEEPSEEK_MODEL, FDA_DIR
+from app.services.llm_utils import NON_THINKING, _parse_json_response, get_client
 
 MANIFEST_PATH = FDA_DIR / "manifest.json"
 DOC_CHAR_BUDGET = 40000
@@ -59,18 +59,18 @@ async def _select_docs(client, docs: list[dict], usdm: dict) -> list[int]:
         "Answer with only the indices in curly brackets, e.g. {0,3,5}."
     )
     try:
-        resp = await client.messages.create(
-            model=HAIKU_MODEL,
+        resp = await client.chat.completions.create(
+            model=DEEPSEEK_MODEL,
             max_tokens=100,
+            extra_body=NON_THINKING,
             messages=[{"role": "user", "content": prompt}],
         )
-        text = next((b.text for b in resp.content if b.type == "text"), "")
+        text = resp.choices[0].message.content or ""
         indices = _parse_indices(text, len(docs))
         if indices:
             return indices
     except Exception:
         pass
-    # fallback: general category docs
     fallback = [i for i, d in enumerate(docs) if d["category"] == "general"]
     return fallback[:3] if fallback else list(range(min(3, len(docs))))
 
@@ -121,12 +121,14 @@ async def analyze_fda_compliance(usdm: dict) -> dict:
 
     result = None
     for _ in range(2):
-        resp = await client.messages.create(
-            model=SONNET_MODEL,
+        resp = await client.chat.completions.create(
+            model=DEEPSEEK_MODEL,
             max_tokens=8000,
+            extra_body=NON_THINKING,
+            response_format={"type": "json_object"},
             messages=[{"role": "user", "content": prompt}],
         )
-        text = next((b.text for b in resp.content if b.type == "text"), "")
+        text = resp.choices[0].message.content or ""
         try:
             result = _parse_json_response(text)
             break

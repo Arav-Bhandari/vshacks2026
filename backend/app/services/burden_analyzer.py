@@ -1,4 +1,4 @@
-"""Rule-based complexity/recruitment/burden scoring for a USDM protocol."""
+"""Score protocol complexity and patient burden."""
 import re
 
 _COMMON_CONDITIONS = {

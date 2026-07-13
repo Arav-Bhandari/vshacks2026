@@ -1,4 +1,4 @@
-"""Async orchestration of the upload -> analysis pipeline."""
+"""Run the protocol analysis pipeline."""
 import asyncio
 import logging
 import traceback

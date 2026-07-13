@@ -1,4 +1,4 @@
-"""In-process WebSocket connection manager for pipeline progress events."""
+"""Broadcast pipeline progress over WebSockets."""
 from collections import defaultdict
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect

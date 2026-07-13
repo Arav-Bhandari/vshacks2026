@@ -8,22 +8,63 @@ SCHEMA = """
 CREATE TABLE IF NOT EXISTS trials (
     nct_id TEXT PRIMARY KEY,
     title TEXT,
+    official_title TEXT,
     status TEXT,
+    study_type TEXT,
     phase TEXT,
     conditions TEXT,
+    conditions_json JSON,
     interventions TEXT,
+    interventions_json JSON,
     primary_outcomes TEXT,
+    primary_outcomes_json JSON,
     secondary_outcomes TEXT,
+    secondary_outcomes_json JSON,
+    primary_outcome_timeframes TEXT,
+    primary_outcome_timeframes_json JSON,
+    secondary_outcome_timeframes TEXT,
+    secondary_outcome_timeframes_json JSON,
     enrollment INTEGER,
+    enrollment_type TEXT,
     start_date TEXT,
+    start_date_type TEXT,
+    feature_start_date TEXT,
+    feature_start_date_type TEXT,
+    primary_completion_date TEXT,
+    primary_completion_date_type TEXT,
     completion_date TEXT,
+    completion_date_type TEXT,
     duration_months REAL,
     allocation TEXT,
     masking TEXT,
     arms INTEGER,
     intervention_model TEXT,
+    primary_purpose TEXT,
+    observational_model TEXT,
+    time_perspective TEXT,
     sponsor TEXT,
+    sponsor_class TEXT,
+    collaborators_count INTEGER,
+    sex TEXT,
+    minimum_age TEXT,
+    maximum_age TEXT,
+    minimum_age_years REAL,
+    maximum_age_years REAL,
+    healthy_volunteers INTEGER,
+    std_ages TEXT,
+    sampling_method TEXT,
+    study_population TEXT,
+    site_count INTEGER,
+    country_count INTEGER,
+    countries TEXT,
     eligibility TEXT,
+    inclusion_criteria_count INTEGER,
+    exclusion_criteria_count INTEGER,
+    feature_snapshot_date TEXT,
+    feature_snapshot_kind TEXT,
+    study_first_submit_date TEXT,
+    source_updated_at TEXT,
+    fetched_at TEXT,
     raw JSON
 );
 CREATE VIRTUAL TABLE IF NOT EXISTS trials_fts USING fts5(
@@ -49,10 +90,64 @@ CREATE INDEX IF NOT EXISTS idx_trials_phase ON trials(phase);
 CREATE INDEX IF NOT EXISTS idx_trials_status ON trials(status);
 """
 
+TRIAL_MIGRATIONS = {
+    "official_title": "TEXT",
+    "study_type": "TEXT",
+    "conditions_json": "JSON",
+    "interventions_json": "JSON",
+    "primary_outcomes_json": "JSON",
+    "secondary_outcomes_json": "JSON",
+    "primary_outcome_timeframes": "TEXT",
+    "primary_outcome_timeframes_json": "JSON",
+    "secondary_outcome_timeframes": "TEXT",
+    "secondary_outcome_timeframes_json": "JSON",
+    "enrollment_type": "TEXT",
+    "start_date_type": "TEXT",
+    "feature_start_date": "TEXT",
+    "feature_start_date_type": "TEXT",
+    "primary_completion_date": "TEXT",
+    "primary_completion_date_type": "TEXT",
+    "completion_date_type": "TEXT",
+    "primary_purpose": "TEXT",
+    "observational_model": "TEXT",
+    "time_perspective": "TEXT",
+    "sponsor_class": "TEXT",
+    "collaborators_count": "INTEGER",
+    "sex": "TEXT",
+    "minimum_age": "TEXT",
+    "maximum_age": "TEXT",
+    "minimum_age_years": "REAL",
+    "maximum_age_years": "REAL",
+    "healthy_volunteers": "INTEGER",
+    "std_ages": "TEXT",
+    "sampling_method": "TEXT",
+    "study_population": "TEXT",
+    "site_count": "INTEGER",
+    "country_count": "INTEGER",
+    "countries": "TEXT",
+    "inclusion_criteria_count": "INTEGER",
+    "exclusion_criteria_count": "INTEGER",
+    "feature_snapshot_date": "TEXT",
+    "feature_snapshot_kind": "TEXT",
+    "study_first_submit_date": "TEXT",
+    "source_updated_at": "TEXT",
+    "fetched_at": "TEXT",
+}
+
+
+def _migrate_trials(db: sqlite3.Connection):
+    existing = {row[1] for row in db.execute("PRAGMA table_info(trials)")}
+    for column, sql_type in TRIAL_MIGRATIONS.items():
+        if column not in existing:
+            db.execute(f'ALTER TABLE trials ADD COLUMN "{column}" {sql_type}')
+    db.execute("CREATE INDEX IF NOT EXISTS idx_trials_study_type ON trials(study_type)")
+    db.execute("CREATE INDEX IF NOT EXISTS idx_trials_start_date ON trials(start_date)")
+
 
 def init_db():
     with get_db() as db:
         db.executescript(SCHEMA)
+        _migrate_trials(db)
 
 
 @contextmanager
@@ -67,12 +162,26 @@ def get_db():
         conn.close()
 
 
-def upsert_trials(rows: list[dict]):
+def upsert_trials(rows: list[dict], *, update_fts: bool = True):
     cols = [
-        "nct_id", "title", "status", "phase", "conditions", "interventions",
-        "primary_outcomes", "secondary_outcomes", "enrollment", "start_date",
-        "completion_date", "duration_months", "allocation", "masking", "arms",
-        "intervention_model", "sponsor", "eligibility", "raw",
+        "nct_id", "title", "official_title", "status", "study_type", "phase",
+        "conditions", "conditions_json", "interventions", "interventions_json",
+        "primary_outcomes", "primary_outcomes_json", "secondary_outcomes",
+        "secondary_outcomes_json", "primary_outcome_timeframes",
+        "primary_outcome_timeframes_json", "secondary_outcome_timeframes",
+        "secondary_outcome_timeframes_json", "enrollment",
+        "enrollment_type", "start_date", "start_date_type",
+        "feature_start_date", "feature_start_date_type",
+        "primary_completion_date", "primary_completion_date_type", "completion_date",
+        "completion_date_type", "duration_months", "allocation", "masking", "arms",
+        "intervention_model", "primary_purpose", "observational_model",
+        "time_perspective", "sponsor", "sponsor_class", "collaborators_count", "sex",
+        "minimum_age", "maximum_age", "minimum_age_years", "maximum_age_years",
+        "healthy_volunteers", "std_ages", "sampling_method", "study_population",
+        "site_count", "country_count", "countries", "eligibility",
+        "inclusion_criteria_count", "exclusion_criteria_count",
+        "feature_snapshot_date", "feature_snapshot_kind",
+        "study_first_submit_date", "source_updated_at", "fetched_at", "raw",
     ]
     with get_db() as db:
         db.executemany(
@@ -80,19 +189,21 @@ def upsert_trials(rows: list[dict]):
             f"VALUES ({','.join('?' * len(cols))})",
             [tuple(r.get(c) for c in cols) for r in rows],
         )
-        db.executemany(
-            "DELETE FROM trials_fts WHERE nct_id = ?",
-            [(r["nct_id"],) for r in rows],
-        )
-        db.executemany(
-            "INSERT INTO trials_fts (nct_id, title, conditions, interventions, "
-            "primary_outcomes) VALUES (?,?,?,?,?)",
-            [
-                (r["nct_id"], r.get("title") or "", r.get("conditions") or "",
-                 r.get("interventions") or "", r.get("primary_outcomes") or "")
-                for r in rows
-            ],
-        )
+        if update_fts:
+            ids = [r["nct_id"] for r in rows]
+            db.execute(
+                f"DELETE FROM trials_fts WHERE nct_id IN ({','.join('?' * len(ids))})",
+                ids,
+            )
+            db.executemany(
+                "INSERT INTO trials_fts (nct_id, title, conditions, interventions, "
+                "primary_outcomes) VALUES (?,?,?,?,?)",
+                [
+                    (r["nct_id"], r.get("title") or "", r.get("conditions") or "",
+                     r.get("interventions") or "", r.get("primary_outcomes") or "")
+                    for r in rows
+                ],
+            )
 
 
 def trial_count() -> int:

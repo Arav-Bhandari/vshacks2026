@@ -1,0 +1,1610 @@
+{
+  "schema_version": 3,
+  "n_rows": 400,
+  "n_rows_production_eligible": 400,
+  "r2_log": 0.6858,
+  "r2_raw": 0.6977,
+  "r2_raw_uncalibrated": 0.7154,
+  "r2_raw_with_baseline": 0.6977,
+  "val_r2_log": 0.7744,
+  "timestamp": 1783901479.7007596,
+  "synthetic": true,
+  "train_seconds": 3.9,
+  "params": {
+    "max_depth": 4,
+    "learning_rate": 0.06,
+    "subsample": 0.85,
+    "colsample_bytree": 0.85,
+    "min_child_weight": 5,
+    "reg_alpha": 0.0,
+    "reg_lambda": 2.0,
+    "gamma": 0.0
+  },
+  "selection_strategy": "rolling_origin",
+  "selection_metric": "raw_r2",
+  "selection_score": 0.78226,
+  "n_estimators_budget": 60,
+  "n_estimators_used": 60,
+  "struct_features": [
+    "phase_num",
+    "phase_missing",
+    "log_enrollment",
+    "enrollment_missing",
+    "n_arms",
+    "arms_missing",
+    "n_endpoints_primary",
+    "n_endpoints_secondary",
+    "has_secondary_outcomes",
+    "endpoints_missing",
+    "n_inclusion",
+    "n_exclusion",
+    "eligibility_missing",
+    "randomized",
+    "allocation_missing",
+    "blinded",
+    "masking_missing",
+    "n_conditions",
+    "conditions_missing",
+    "n_interventions",
+    "interventions_missing",
+    "is_drug",
+    "is_biological",
+    "is_device",
+    "is_behavioral",
+    "is_procedure",
+    "is_other_intervention",
+    "intervention_type_missing",
+    "is_academic",
+    "is_industry",
+    "is_government",
+    "sponsor_missing",
+    "start_year",
+    "start_date_missing",
+    "is_interventional",
+    "is_observational",
+    "study_type_missing",
+    "purpose_treatment",
+    "purpose_prevention",
+    "purpose_diagnostic",
+    "purpose_supportive_care",
+    "purpose_screening",
+    "purpose_basic_science",
+    "purpose_other",
+    "primary_purpose_missing",
+    "model_parallel",
+    "model_crossover",
+    "model_factorial",
+    "model_single_group",
+    "model_sequential",
+    "model_other",
+    "intervention_model_missing",
+    "female_only",
+    "male_only",
+    "sex_all",
+    "sex_missing",
+    "minimum_age_years",
+    "maximum_age_years",
+    "age_range_years",
+    "age_missing",
+    "healthy_volunteers",
+    "healthy_volunteers_missing",
+    "n_sites",
+    "sites_missing",
+    "n_countries",
+    "countries_missing",
+    "n_collaborators",
+    "collaborators_missing",
+    "primary_outcome_timeframe_months",
+    "secondary_outcome_timeframe_months",
+    "outcome_timeframes_missing"
+  ],
+  "feature_order": [
+    "phase_num",
+    "phase_missing",
+    "log_enrollment",
+    "enrollment_missing",
+    "n_arms",
+    "arms_missing",
+    "n_endpoints_primary",
+    "n_endpoints_secondary",
+    "has_secondary_outcomes",
+    "endpoints_missing",
+    "n_inclusion",
+    "n_exclusion",
+    "eligibility_missing",
+    "randomized",
+    "allocation_missing",
+    "blinded",
+    "masking_missing",
+    "n_conditions",
+    "conditions_missing",
+    "n_interventions",
+    "interventions_missing",
+    "is_drug",
+    "is_biological",
+    "is_device",
+    "is_behavioral",
+    "is_procedure",
+    "is_other_intervention",
+    "intervention_type_missing",
+    "is_academic",
+    "is_industry",
+    "is_government",
+    "sponsor_missing",
+    "start_year",
+    "start_date_missing",
+    "is_interventional",
+    "is_observational",
+    "study_type_missing",
+    "purpose_treatment",
+    "purpose_prevention",
+    "purpose_diagnostic",
+    "purpose_supportive_care",
+    "purpose_screening",
+    "purpose_basic_science",
+    "purpose_other",
+    "primary_purpose_missing",
+    "model_parallel",
+    "model_crossover",
+    "model_factorial",
+    "model_single_group",
+    "model_sequential",
+    "model_other",
+    "intervention_model_missing",
+    "female_only",
+    "male_only",
+    "sex_all",
+    "sex_missing",
+    "minimum_age_years",
+    "maximum_age_years",
+    "age_range_years",
+    "age_missing",
+    "healthy_volunteers",
+    "healthy_volunteers_missing",
+    "n_sites",
+    "sites_missing",
+    "n_countries",
+    "countries_missing",
+    "n_collaborators",
+    "collaborators_missing",
+    "primary_outcome_timeframe_months",
+    "secondary_outcome_timeframe_months",
+    "outcome_timeframes_missing",
+    "emb_0",
+    "emb_1",
+    "emb_2",
+    "emb_3",
+    "emb_4",
+    "emb_5",
+    "emb_6",
+    "emb_7",
+    "emb_8",
+    "emb_9",
+    "emb_10",
+    "emb_11",
+    "emb_12",
+    "emb_13",
+    "emb_14",
+    "emb_15",
+    "emb_16",
+    "emb_17",
+    "emb_18",
+    "emb_19",
+    "emb_20",
+    "emb_21",
+    "emb_22",
+    "emb_23",
+    "emb_24",
+    "emb_25",
+    "emb_26",
+    "emb_27",
+    "emb_28",
+    "emb_29",
+    "emb_30",
+    "emb_31",
+    "emb_32",
+    "emb_33",
+    "emb_34",
+    "emb_35",
+    "emb_36",
+    "emb_37",
+    "emb_38",
+    "emb_39",
+    "emb_40",
+    "emb_41",
+    "emb_42",
+    "emb_43",
+    "emb_44",
+    "emb_45",
+    "emb_46",
+    "emb_47",
+    "emb_48",
+    "emb_49",
+    "emb_50",
+    "emb_51",
+    "emb_52",
+    "emb_53",
+    "emb_54",
+    "emb_55",
+    "emb_56",
+    "emb_57",
+    "emb_58",
+    "emb_59",
+    "emb_60",
+    "emb_61",
+    "emb_62",
+    "emb_63",
+    "emb_64",
+    "emb_65",
+    "emb_66",
+    "emb_67",
+    "emb_68",
+    "emb_69",
+    "emb_70",
+    "emb_71",
+    "emb_72",
+    "emb_73",
+    "emb_74",
+    "emb_75",
+    "emb_76",
+    "emb_77",
+    "emb_78",
+    "emb_79",
+    "emb_80",
+    "emb_81",
+    "emb_82",
+    "emb_83",
+    "emb_84",
+    "emb_85",
+    "emb_86",
+    "emb_87",
+    "emb_88",
+    "emb_89",
+    "emb_90",
+    "emb_91",
+    "emb_92",
+    "emb_93",
+    "emb_94",
+    "emb_95",
+    "emb_96",
+    "emb_97",
+    "emb_98",
+    "emb_99",
+    "emb_100",
+    "emb_101",
+    "emb_102",
+    "emb_103",
+    "emb_104",
+    "emb_105",
+    "emb_106",
+    "emb_107",
+    "emb_108",
+    "emb_109",
+    "emb_110",
+    "emb_111",
+    "emb_112",
+    "emb_113",
+    "emb_114",
+    "emb_115",
+    "emb_116",
+    "emb_117",
+    "emb_118",
+    "emb_119",
+    "emb_120",
+    "emb_121",
+    "emb_122",
+    "emb_123",
+    "emb_124",
+    "emb_125",
+    "emb_126",
+    "emb_127",
+    "emb_128",
+    "emb_129",
+    "emb_130",
+    "emb_131",
+    "emb_132",
+    "emb_133",
+    "emb_134",
+    "emb_135",
+    "emb_136",
+    "emb_137",
+    "emb_138",
+    "emb_139",
+    "emb_140",
+    "emb_141",
+    "emb_142",
+    "emb_143",
+    "emb_144",
+    "emb_145",
+    "emb_146",
+    "emb_147",
+    "emb_148",
+    "emb_149",
+    "emb_150",
+    "emb_151",
+    "emb_152",
+    "emb_153",
+    "emb_154",
+    "emb_155",
+    "emb_156",
+    "emb_157",
+    "emb_158",
+    "emb_159",
+    "emb_160",
+    "emb_161",
+    "emb_162",
+    "emb_163",
+    "emb_164",
+    "emb_165",
+    "emb_166",
+    "emb_167",
+    "emb_168",
+    "emb_169",
+    "emb_170",
+    "emb_171",
+    "emb_172",
+    "emb_173",
+    "emb_174",
+    "emb_175",
+    "emb_176",
+    "emb_177",
+    "emb_178",
+    "emb_179",
+    "emb_180",
+    "emb_181",
+    "emb_182",
+    "emb_183",
+    "emb_184",
+    "emb_185",
+    "emb_186",
+    "emb_187",
+    "emb_188",
+    "emb_189",
+    "emb_190",
+    "emb_191",
+    "emb_192",
+    "emb_193",
+    "emb_194",
+    "emb_195",
+    "emb_196",
+    "emb_197",
+    "emb_198",
+    "emb_199",
+    "emb_200",
+    "emb_201",
+    "emb_202",
+    "emb_203",
+    "emb_204",
+    "emb_205",
+    "emb_206",
+    "emb_207",
+    "emb_208",
+    "emb_209",
+    "emb_210",
+    "emb_211",
+    "emb_212",
+    "emb_213",
+    "emb_214",
+    "emb_215",
+    "emb_216",
+    "emb_217",
+    "emb_218",
+    "emb_219",
+    "emb_220",
+    "emb_221",
+    "emb_222",
+    "emb_223",
+    "emb_224",
+    "emb_225",
+    "emb_226",
+    "emb_227",
+    "emb_228",
+    "emb_229",
+    "emb_230",
+    "emb_231",
+    "emb_232",
+    "emb_233",
+    "emb_234",
+    "emb_235",
+    "emb_236",
+    "emb_237",
+    "emb_238",
+    "emb_239",
+    "emb_240",
+    "emb_241",
+    "emb_242",
+    "emb_243",
+    "emb_244",
+    "emb_245",
+    "emb_246",
+    "emb_247",
+    "emb_248",
+    "emb_249",
+    "emb_250",
+    "emb_251",
+    "emb_252",
+    "emb_253",
+    "emb_254",
+    "emb_255",
+    "emb_256",
+    "emb_257",
+    "emb_258",
+    "emb_259",
+    "emb_260",
+    "emb_261",
+    "emb_262",
+    "emb_263",
+    "emb_264",
+    "emb_265",
+    "emb_266",
+    "emb_267",
+    "emb_268",
+    "emb_269",
+    "emb_270",
+    "emb_271",
+    "emb_272",
+    "emb_273",
+    "emb_274",
+    "emb_275",
+    "emb_276",
+    "emb_277",
+    "emb_278",
+    "emb_279",
+    "emb_280",
+    "emb_281",
+    "emb_282",
+    "emb_283",
+    "emb_284",
+    "emb_285",
+    "emb_286",
+    "emb_287",
+    "emb_288",
+    "emb_289",
+    "emb_290",
+    "emb_291",
+    "emb_292",
+    "emb_293",
+    "emb_294",
+    "emb_295",
+    "emb_296",
+    "emb_297",
+    "emb_298",
+    "emb_299",
+    "emb_300",
+    "emb_301",
+    "emb_302",
+    "emb_303",
+    "emb_304",
+    "emb_305",
+    "emb_306",
+    "emb_307",
+    "emb_308",
+    "emb_309",
+    "emb_310",
+    "emb_311",
+    "emb_312",
+    "emb_313",
+    "emb_314",
+    "emb_315",
+    "emb_316",
+    "emb_317",
+    "emb_318",
+    "emb_319",
+    "emb_320",
+    "emb_321",
+    "emb_322",
+    "emb_323",
+    "emb_324",
+    "emb_325",
+    "emb_326",
+    "emb_327",
+    "emb_328",
+    "emb_329",
+    "emb_330",
+    "emb_331",
+    "emb_332",
+    "emb_333",
+    "emb_334",
+    "emb_335",
+    "emb_336",
+    "emb_337",
+    "emb_338",
+    "emb_339",
+    "emb_340",
+    "emb_341",
+    "emb_342",
+    "emb_343",
+    "emb_344",
+    "emb_345",
+    "emb_346",
+    "emb_347",
+    "emb_348",
+    "emb_349",
+    "emb_350",
+    "emb_351",
+    "emb_352",
+    "emb_353",
+    "emb_354",
+    "emb_355",
+    "emb_356",
+    "emb_357",
+    "emb_358",
+    "emb_359",
+    "emb_360",
+    "emb_361",
+    "emb_362",
+    "emb_363",
+    "emb_364",
+    "emb_365",
+    "emb_366",
+    "emb_367",
+    "emb_368",
+    "emb_369",
+    "emb_370",
+    "emb_371",
+    "emb_372",
+    "emb_373",
+    "emb_374",
+    "emb_375",
+    "emb_376",
+    "emb_377",
+    "emb_378",
+    "emb_379",
+    "emb_380",
+    "emb_381",
+    "emb_382",
+    "emb_383"
+  ],
+  "emb_dim": 384,
+  "emb_model": "all-MiniLM-L6-v2",
+  "embedding_recipe_version": 2,
+  "deep": false,
+  "heavy": false,
+  "xgb_device": "cpu",
+  "calibration": {
+    "method": "affine_raw",
+    "fitted_on": "validation",
+    "smearing_factor": 1.026187,
+    "slope": 1.007712,
+    "intercept": 0.306842,
+    "validation_r2_raw_by_method": {
+      "none": 0.824373,
+      "smearing": 0.826018,
+      "affine_raw": 0.826524
+    }
+  },
+  "stacking": {
+    "prediction_space": "log1p_duration_months",
+    "component_order": [
+      "xgb_log",
+      "text_log"
+    ],
+    "weights": {
+      "xgb_log": 1.024652,
+      "text_log": 0.0
+    },
+    "intercept": -0.018574,
+    "nonnegative_weights": true,
+    "fitted_on": "temporal_validation_2017",
+    "text_head": {
+      "artifact": "duration_text_ridge.npz",
+      "alpha": 100.0,
+      "embedding_dim": 384,
+      "target": "log1p_duration_months",
+      "artifact_sha256": "a93af70f672a0459634996f0545d684ade9fe0ba3acea90cc63a8db92f5b32de",
+      "artifact_schema_version": 1
+    },
+    "serving_order": [
+      "xgb_log_and_text_ridge_log",
+      "nonnegative_log_stack",
+      "expm1_and_calibration",
+      "optional_baseline_blend"
+    ]
+  },
+  "baseline_blend": {
+    "model_weight": 1.0,
+    "baseline_weight": 0.0,
+    "intercept": 0.0,
+    "nonnegative_weights": true,
+    "fitted_on": "temporal_validation_2017",
+    "baseline_source": "embedding_neighbor_duration"
+  },
+  "neighbor_baseline": {
+    "validation": {
+      "backend": "faiss_ivf_cosine",
+      "reference_size": 284,
+      "n_neighbors": 25,
+      "max_reference": 50000,
+      "metric": "cosine"
+    },
+    "test": {
+      "backend": "faiss_ivf_cosine",
+      "reference_size": 309,
+      "n_neighbors": 25,
+      "max_reference": 50000,
+      "metric": "cosine"
+    },
+    "leakage_control": "validation queries train-only; test queries train+validation"
+  },
+  "coverage_preflight": {
+    "n_rows": 400,
+    "nonfinite_counts": {},
+    "constant_features": [
+      "phase_missing",
+      "enrollment_missing",
+      "arms_missing",
+      "endpoints_missing",
+      "eligibility_missing",
+      "allocation_missing",
+      "masking_missing",
+      "conditions_missing",
+      "interventions_missing",
+      "is_biological",
+      "is_device",
+      "is_behavioral",
+      "is_procedure",
+      "is_other_intervention",
+      "intervention_type_missing",
+      "is_industry",
+      "is_government",
+      "sponsor_missing",
+      "start_date_missing",
+      "is_observational",
+      "purpose_treatment",
+      "purpose_prevention",
+      "purpose_diagnostic",
+      "purpose_supportive_care",
+      "purpose_screening",
+      "purpose_basic_science",
+      "purpose_other",
+      "primary_purpose_missing",
+      "model_parallel",
+      "model_crossover",
+      "model_factorial",
+      "model_single_group",
+      "model_sequential",
+      "model_other",
+      "intervention_model_missing",
+      "female_only",
+      "male_only",
+      "sex_all",
+      "sex_missing",
+      "minimum_age_years",
+      "maximum_age_years",
+      "age_range_years",
+      "age_missing",
+      "healthy_volunteers",
+      "healthy_volunteers_missing",
+      "n_sites",
+      "sites_missing",
+      "n_countries",
+      "countries_missing",
+      "n_collaborators",
+      "collaborators_missing",
+      "primary_outcome_timeframe_months",
+      "secondary_outcome_timeframe_months",
+      "outcome_timeframes_missing"
+    ],
+    "near_constant_features": [],
+    "missing_flag_rates": {
+      "phase_missing": 0.0,
+      "enrollment_missing": 0.0,
+      "arms_missing": 0.0,
+      "endpoints_missing": 0.0,
+      "eligibility_missing": 0.0,
+      "allocation_missing": 0.0,
+      "masking_missing": 0.0,
+      "conditions_missing": 0.0,
+      "interventions_missing": 0.0,
+      "intervention_type_missing": 0.0,
+      "sponsor_missing": 0.0,
+      "start_date_missing": 0.0,
+      "study_type_missing": 0.1975,
+      "primary_purpose_missing": 0.0,
+      "intervention_model_missing": 0.0,
+      "sex_missing": 0.0,
+      "age_missing": 0.0,
+      "healthy_volunteers_missing": 0.0,
+      "sites_missing": 0.0,
+      "countries_missing": 0.0,
+      "collaborators_missing": 0.0,
+      "outcome_timeframes_missing": 0.0
+    },
+    "warnings": [
+      "Constant structured features: phase_missing, enrollment_missing, arms_missing, endpoints_missing, eligibility_missing, allocation_missing, masking_missing, conditions_missing, interventions_missing, is_biological, is_device, is_behavioral, is_procedure, is_other_intervention, intervention_type_missing, is_industry, is_government, sponsor_missing, start_date_missing, is_observational, purpose_treatment, purpose_prevention, purpose_diagnostic, purpose_supportive_care, purpose_screening, purpose_basic_science, purpose_other, primary_purpose_missing, model_parallel, model_crossover, model_factorial, model_single_group, model_sequential, model_other, intervention_model_missing, female_only, male_only, sex_all, sex_missing, minimum_age_years, maximum_age_years, age_range_years, age_missing, healthy_volunteers, healthy_volunteers_missing, n_sites, sites_missing, n_countries, countries_missing, n_collaborators, collaborators_missing, primary_outcome_timeframe_months, secondary_outcome_timeframe_months, outcome_timeframes_missing",
+      "No versioned/initial snapshot provenance is populated for the training cohort"
+    ],
+    "passed": true,
+    "source": {
+      "field_nonmissing_rates": {
+        "conditions_json": 0.0,
+        "interventions_json": 0.0,
+        "primary_outcomes_json": 0.0,
+        "secondary_outcomes_json": 0.0,
+        "eligibility_inclusion_count": 0.0,
+        "eligibility_exclusion_count": 0.0,
+        "site_count": 0.0,
+        "country_count": 0.0,
+        "snapshot_type": 0.0
+      },
+      "snapshot_type_counts": {
+        "UNKNOWN": 400
+      },
+      "enrollment_type_counts": {
+        "UNKNOWN": 400
+      }
+    }
+  },
+  "specialists": {
+    "phase23_interventional": {
+      "available": true,
+      "artifact": "duration_model_phase23.json",
+      "routing": {
+        "study_type": "INTERVENTIONAL",
+        "phase_num_in": [
+          2,
+          3
+        ],
+        "fallback": "generic_stack"
+      },
+      "prediction_pipeline": "xgb_log_then_specialist_calibration",
+      "calibration": {
+        "method": "affine_raw",
+        "fitted_on": "validation",
+        "smearing_factor": 1.08824,
+        "slope": 2.01272,
+        "intercept": -23.671432,
+        "validation_r2_raw_by_method": {
+          "none": 0.287823,
+          "smearing": 0.452031,
+          "affine_raw": 0.5744
+        }
+      },
+      "counts": {
+        "train": 100,
+        "validation": 11,
+        "test": 14
+      },
+      "n_estimators_used": 60,
+      "pre_refit_test_metrics": {
+        "log": {
+          "r2": 0.415156,
+          "rmse": 0.246241,
+          "mae": 0.2015
+        },
+        "raw_uncalibrated": {
+          "r2": 0.442363,
+          "rmse": 6.362513,
+          "mae": 5.381576
+        },
+        "raw_calibrated": {
+          "r2": 0.539323,
+          "rmse": 5.782973,
+          "mae": 4.979714
+        }
+      },
+      "artifact_test_metrics": {
+        "log": {
+          "r2": 0.57026,
+          "rmse": 0.211078,
+          "mae": 0.173496
+        },
+        "raw_uncalibrated": {
+          "r2": 0.594176,
+          "rmse": 5.427775,
+          "mae": 4.641805
+        },
+        "raw_calibrated": {
+          "r2": 0.636133,
+          "rmse": 5.139536,
+          "mae": 4.293207
+        }
+      },
+      "artifact_sha256": "752e12754bf50c17564d3c580a18fd2547676ad32922c6efb81ba0693702a266"
+    }
+  },
+  "evaluations": {
+    "mature_temporal": {
+      "strategy": "expanding_window_rolling_origin",
+      "validation_years_requested": [
+        2015,
+        2016,
+        2017
+      ],
+      "validation_years_used": [
+        2015,
+        2016,
+        2017
+      ],
+      "test_year": 2018,
+      "test_rows": 26,
+      "unavailable_folds": [],
+      "selection_uses_test": false,
+      "primary_validation_year": 2017,
+      "counts": {
+        "train": 284,
+        "validation": 25,
+        "test": 26
+      },
+      "validation_metrics": {
+        "xgb": {
+          "log": {
+            "r2": 0.759426,
+            "rmse": 0.233146,
+            "mae": 0.183162
+          },
+          "raw_uncalibrated": {
+            "r2": 0.785943,
+            "rmse": 4.959905,
+            "mae": 3.997628
+          },
+          "raw_calibrated": {
+            "r2": 0.785943,
+            "rmse": 4.959905,
+            "mae": 3.997628
+          }
+        },
+        "text_ridge": {
+          "log": {
+            "r2": -0.711844,
+            "rmse": 0.621922,
+            "mae": 0.526772
+          },
+          "raw_uncalibrated": {
+            "r2": -0.634898,
+            "rmse": 13.707374,
+            "mae": 11.502235
+          },
+          "raw_calibrated": {
+            "r2": -0.634898,
+            "rmse": 13.707374,
+            "mae": 11.502235
+          }
+        },
+        "stacked": {
+          "log": {
+            "r2": 0.774396,
+            "rmse": 0.225776,
+            "mae": 0.176165
+          },
+          "raw_uncalibrated": {
+            "r2": 0.824373,
+            "rmse": 4.49267,
+            "mae": 3.747551
+          },
+          "raw_calibrated": {
+            "r2": 0.826524,
+            "rmse": 4.46507,
+            "mae": 3.752942
+          }
+        },
+        "neighbor_baseline_raw": {
+          "r2": -0.058874,
+          "rmse": 11.031414,
+          "mae": 8.846928
+        },
+        "stacked_with_neighbor_baseline_raw": {
+          "r2": 0.826524,
+          "rmse": 4.46507,
+          "mae": 3.752942
+        }
+      },
+      "pre_refit_test_metrics": {
+        "xgb": {
+          "log": {
+            "r2": 0.706424,
+            "rmse": 0.211056,
+            "mae": 0.162746
+          },
+          "raw_uncalibrated": {
+            "r2": 0.677318,
+            "rmse": 5.154509,
+            "mae": 3.813085
+          },
+          "raw_calibrated": {
+            "r2": 0.677318,
+            "rmse": 5.154509,
+            "mae": 3.813085
+          }
+        },
+        "text_ridge": {
+          "log": {
+            "r2": -0.408703,
+            "rmse": 0.462324,
+            "mae": 0.391222
+          },
+          "raw_uncalibrated": {
+            "r2": -0.31496,
+            "rmse": 10.405342,
+            "mae": 8.934909
+          },
+          "raw_calibrated": {
+            "r2": -0.31496,
+            "rmse": 10.405342,
+            "mae": 8.934909
+          }
+        },
+        "stacked": {
+          "log": {
+            "r2": 0.687013,
+            "rmse": 0.217921,
+            "mae": 0.168797
+          },
+          "raw_uncalibrated": {
+            "r2": 0.682813,
+            "rmse": 5.110432,
+            "mae": 3.969
+          },
+          "raw_calibrated": {
+            "r2": 0.670909,
+            "rmse": 5.205452,
+            "mae": 4.052615
+          }
+        },
+        "neighbor_baseline_raw": {
+          "r2": 0.074971,
+          "rmse": 8.727256,
+          "mae": 7.344845
+        },
+        "stacked_with_neighbor_baseline_raw": {
+          "r2": 0.670909,
+          "rmse": 5.205452,
+          "mae": 4.052615
+        }
+      },
+      "artifact_test_metrics": {
+        "xgb": {
+          "log": {
+            "r2": 0.721,
+            "rmse": 0.20575,
+            "mae": 0.155909
+          },
+          "raw_uncalibrated": {
+            "r2": 0.723882,
+            "rmse": 4.768127,
+            "mae": 3.603056
+          },
+          "raw_calibrated": {
+            "r2": 0.723882,
+            "rmse": 4.768127,
+            "mae": 3.603056
+          }
+        },
+        "text_ridge": {
+          "log": {
+            "r2": -0.398588,
+            "rmse": 0.460661,
+            "mae": 0.381408
+          },
+          "raw_uncalibrated": {
+            "r2": -0.38728,
+            "rmse": 10.68765,
+            "mae": 8.818174
+          },
+          "raw_calibrated": {
+            "r2": -0.38728,
+            "rmse": 10.68765,
+            "mae": 8.818174
+          }
+        },
+        "stacked": {
+          "log": {
+            "r2": 0.685836,
+            "rmse": 0.218331,
+            "mae": 0.168978
+          },
+          "raw_uncalibrated": {
+            "r2": 0.715385,
+            "rmse": 4.840933,
+            "mae": 3.856612
+          },
+          "raw_calibrated": {
+            "r2": 0.697708,
+            "rmse": 4.989,
+            "mae": 4.037862
+          }
+        },
+        "neighbor_baseline_raw": {
+          "r2": 0.074971,
+          "rmse": 8.727256,
+          "mae": 7.344845
+        },
+        "stacked_with_neighbor_baseline_raw": {
+          "r2": 0.697708,
+          "rmse": 4.989,
+          "mae": 4.037862
+        }
+      },
+      "interpretation": "Primary score: mature rolling-origin selection with an untouched test year; still conditioned on completed trials."
+    },
+    "legacy_random": {
+      "strategy": "deterministic_random_80_10_10_comparison_only",
+      "counts": {
+        "train": 320,
+        "validation": 40,
+        "test": 40
+      },
+      "metrics": {
+        "xgb": {
+          "log": {
+            "r2": 0.746666,
+            "rmse": 0.264048,
+            "mae": 0.188712
+          },
+          "raw_uncalibrated": {
+            "r2": 0.778485,
+            "rmse": 5.007865,
+            "mae": 4.063993
+          },
+          "raw_calibrated": {
+            "r2": 0.778485,
+            "rmse": 5.007865,
+            "mae": 4.063993
+          }
+        },
+        "text_ridge": {
+          "log": {
+            "r2": -0.205379,
+            "rmse": 0.575967,
+            "mae": 0.478347
+          },
+          "raw_uncalibrated": {
+            "r2": -0.399967,
+            "rmse": 12.589535,
+            "mae": 10.647046
+          },
+          "raw_calibrated": {
+            "r2": -0.399967,
+            "rmse": 12.589535,
+            "mae": 10.647046
+          }
+        },
+        "stacked": {
+          "log": {
+            "r2": 0.756038,
+            "rmse": 0.259117,
+            "mae": 0.179174
+          },
+          "raw_uncalibrated": {
+            "r2": 0.825625,
+            "rmse": 4.443166,
+            "mae": 3.723957
+          },
+          "raw_calibrated": {
+            "r2": 0.824079,
+            "rmse": 4.462819,
+            "mae": 3.756179
+          }
+        }
+      },
+      "influenced_selection": false,
+      "group_leakage_audit": {
+        "group_key": "normalised_sponsor",
+        "unique_groups": {
+          "train": 20,
+          "validation": 16,
+          "test": 16
+        },
+        "train_validation_overlap": 16,
+        "train_test_overlap": 16,
+        "validation_test_overlap": 13,
+        "note": "The legacy split is row-random and therefore has sponsor-group leakage. These overlap counts make that limitation explicit; the temporal backtest is the preferred generalisation metric."
+      }
+    },
+    "sponsor_grouped": {
+      "available": true,
+      "strategy": "normalised_sponsor_group_held_out_80_10_10",
+      "counts": {
+        "train": 320,
+        "validation": 40,
+        "test": 40
+      },
+      "metrics": {
+        "log": {
+          "r2": 0.758493,
+          "rmse": 0.19349,
+          "mae": 0.156331
+        },
+        "raw_uncalibrated": {
+          "r2": 0.699007,
+          "rmse": 4.636896,
+          "mae": 3.534032
+        },
+        "raw_calibrated": {
+          "r2": 0.712788,
+          "rmse": 4.529502,
+          "mae": 3.538799
+        }
+      }
+    }
+  },
+  "search_results": [
+    {
+      "config_index": 0,
+      "params": {
+        "max_depth": 4,
+        "learning_rate": 0.06,
+        "subsample": 0.85,
+        "colsample_bytree": 0.85,
+        "min_child_weight": 5,
+        "reg_alpha": 0.0,
+        "reg_lambda": 2.0,
+        "gamma": 0.0
+      },
+      "mean_rolling_selection_score": 0.78226,
+      "folds": [
+        {
+          "validation_year": 2015,
+          "n_estimators_used": 60,
+          "selection_score": 0.816037,
+          "metrics": {
+            "log": {
+              "r2": 0.828686,
+              "rmse": 0.201422,
+              "mae": 0.150011
+            },
+            "raw_uncalibrated": {
+              "r2": 0.816037,
+              "rmse": 4.960014,
+              "mae": 3.393738
+            },
+            "raw_calibrated": {
+              "r2": 0.816037,
+              "rmse": 4.960014,
+              "mae": 3.393738
+            }
+          }
+        },
+        {
+          "validation_year": 2016,
+          "n_estimators_used": 60,
+          "selection_score": 0.7448,
+          "metrics": {
+            "log": {
+              "r2": 0.76301,
+              "rmse": 0.190549,
+              "mae": 0.154563
+            },
+            "raw_uncalibrated": {
+              "r2": 0.7448,
+              "rmse": 4.404773,
+              "mae": 3.698033
+            },
+            "raw_calibrated": {
+              "r2": 0.7448,
+              "rmse": 4.404773,
+              "mae": 3.698033
+            }
+          }
+        },
+        {
+          "validation_year": 2017,
+          "n_estimators_used": 60,
+          "selection_score": 0.785943,
+          "metrics": {
+            "log": {
+              "r2": 0.759426,
+              "rmse": 0.233146,
+              "mae": 0.183162
+            },
+            "raw_uncalibrated": {
+              "r2": 0.785943,
+              "rmse": 4.959905,
+              "mae": 3.997628
+            },
+            "raw_calibrated": {
+              "r2": 0.785943,
+              "rmse": 4.959905,
+              "mae": 3.997628
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "ridge_search_results": [
+    {
+      "alpha": 0.1,
+      "mean_validation_r2_log": -2.889568,
+      "folds": [
+        {
+          "validation_year": 2015,
+          "metrics": {
+            "log": {
+              "r2": -0.674515,
+              "rmse": 0.629731,
+              "mae": 0.545839
+            },
+            "raw_uncalibrated": {
+              "r2": -1.873208,
+              "rmse": 19.602041,
+              "mae": 14.492024
+            },
+            "raw_calibrated": {
+              "r2": -1.873208,
+              "rmse": 19.602041,
+              "mae": 14.492024
+            }
+          }
+        },
+        {
+          "validation_year": 2016,
+          "metrics": {
+            "log": {
+              "r2": -3.904667,
+              "rmse": 0.866855,
+              "mae": 0.693206
+            },
+            "raw_uncalibrated": {
+              "r2": -4.305717,
+              "rmse": 20.084225,
+              "mae": 15.65798
+            },
+            "raw_calibrated": {
+              "r2": -4.305717,
+              "rmse": 20.084225,
+              "mae": 15.65798
+            }
+          }
+        },
+        {
+          "validation_year": 2017,
+          "metrics": {
+            "log": {
+              "r2": -4.089521,
+              "rmse": 1.072364,
+              "mae": 0.882297
+            },
+            "raw_uncalibrated": {
+              "r2": -6.732123,
+              "rmse": 29.809752,
+              "mae": 22.095596
+            },
+            "raw_calibrated": {
+              "r2": -6.732123,
+              "rmse": 29.809752,
+              "mae": 22.095596
+            }
+          }
+        }
+      ]
+    },
+    {
+      "alpha": 1.0,
+      "mean_validation_r2_log": -2.755144,
+      "folds": [
+        {
+          "validation_year": 2015,
+          "metrics": {
+            "log": {
+              "r2": -0.651586,
+              "rmse": 0.625405,
+              "mae": 0.541901
+            },
+            "raw_uncalibrated": {
+              "r2": -1.767002,
+              "rmse": 19.236342,
+              "mae": 14.311006
+            },
+            "raw_calibrated": {
+              "r2": -1.767002,
+              "rmse": 19.236342,
+              "mae": 14.311006
+            }
+          }
+        },
+        {
+          "validation_year": 2016,
+          "metrics": {
+            "log": {
+              "r2": -3.781664,
+              "rmse": 0.855916,
+              "mae": 0.684876
+            },
+            "raw_uncalibrated": {
+              "r2": -4.117203,
+              "rmse": 19.724199,
+              "mae": 15.446583
+            },
+            "raw_calibrated": {
+              "r2": -4.117203,
+              "rmse": 19.724199,
+              "mae": 15.446583
+            }
+          }
+        },
+        {
+          "validation_year": 2017,
+          "metrics": {
+            "log": {
+              "r2": -3.832181,
+              "rmse": 1.044902,
+              "mae": 0.857577
+            },
+            "raw_uncalibrated": {
+              "r2": -5.945339,
+              "rmse": 28.252422,
+              "mae": 21.219089
+            },
+            "raw_calibrated": {
+              "r2": -5.945339,
+              "rmse": 28.252422,
+              "mae": 21.219089
+            }
+          }
+        }
+      ]
+    },
+    {
+      "alpha": 10.0,
+      "mean_validation_r2_log": -1.950052,
+      "folds": [
+        {
+          "validation_year": 2015,
+          "metrics": {
+            "log": {
+              "r2": -0.481446,
+              "rmse": 0.592316,
+              "mae": 0.514146
+            },
+            "raw_uncalibrated": {
+              "r2": -1.079373,
+              "rmse": 16.675694,
+              "mae": 13.07632
+            },
+            "raw_calibrated": {
+              "r2": -1.079373,
+              "rmse": 16.675694,
+              "mae": 13.07632
+            }
+          }
+        },
+        {
+          "validation_year": 2016,
+          "metrics": {
+            "log": {
+              "r2": -2.914581,
+              "rmse": 0.774434,
+              "mae": 0.620323
+            },
+            "raw_uncalibrated": {
+              "r2": -2.948193,
+              "rmse": 17.325359,
+              "mae": 13.903827
+            },
+            "raw_calibrated": {
+              "r2": -2.948193,
+              "rmse": 17.325359,
+              "mae": 13.903827
+            }
+          }
+        },
+        {
+          "validation_year": 2017,
+          "metrics": {
+            "log": {
+              "r2": -2.45413,
+              "rmse": 0.883432,
+              "mae": 0.727474
+            },
+            "raw_uncalibrated": {
+              "r2": -2.929187,
+              "rmse": 21.250067,
+              "mae": 16.95526
+            },
+            "raw_calibrated": {
+              "r2": -2.929187,
+              "rmse": 21.250067,
+              "mae": 16.95526
+            }
+          }
+        }
+      ]
+    },
+    {
+      "alpha": 100.0,
+      "mean_validation_r2_log": -0.589238,
+      "folds": [
+        {
+          "validation_year": 2015,
+          "metrics": {
+            "log": {
+              "r2": -0.045338,
+              "rmse": 0.497553,
+              "mae": 0.418881
+            },
+            "raw_uncalibrated": {
+              "r2": -0.056567,
+              "rmse": 11.886836,
+              "mae": 9.904857
+            },
+            "raw_calibrated": {
+              "r2": -0.056567,
+              "rmse": 11.886836,
+              "mae": 9.904857
+            }
+          }
+        },
+        {
+          "validation_year": 2016,
+          "metrics": {
+            "log": {
+              "r2": -1.010531,
+              "rmse": 0.555005,
+              "mae": 0.439996
+            },
+            "raw_uncalibrated": {
+              "r2": -1.06907,
+              "rmse": 12.54211,
+              "mae": 10.025369
+            },
+            "raw_calibrated": {
+              "r2": -1.06907,
+              "rmse": 12.54211,
+              "mae": 10.025369
+            }
+          }
+        },
+        {
+          "validation_year": 2017,
+          "metrics": {
+            "log": {
+              "r2": -0.711844,
+              "rmse": 0.621922,
+              "mae": 0.526772
+            },
+            "raw_uncalibrated": {
+              "r2": -0.634898,
+              "rmse": 13.707374,
+              "mae": 11.502235
+            },
+            "raw_calibrated": {
+              "r2": -0.634898,
+              "rmse": 13.707374,
+              "mae": 11.502235
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "refit": {
+    "strategy": "latest_temporal_train_plus_validation",
+    "n_rows": 309,
+    "test_year": 2018,
+    "test_rows_excluded": 26
+  },
+  "maturity": {
+    "comparison_horizon_years": 5,
+    "comparison_start_year_cutoff": 2021
+  },
+  "provenance": {
+    "git_commit": "f947ea7642e86167da555ccc4646fcffa8e733e4",
+    "git_dirty": true,
+    "code_sha256": {
+      "train.py": "f2a74a8b6e56d47d2ebf7faa58fd93b9e47ef7357194ac276bd65a53183a47f1",
+      "features.py": "76094f82b6b94681d6ccedda8d47328d3e76ae75227d8d77ca61c0ff4c238525",
+      "embeddings.py": "1956a72384cabbe0ee4d454a80d6f40682d334f205247c383105f538bb0469d5"
+    },
+    "dataset_sha256": "189be14e95d8adee4da06b48a00d24501fead325d9737a7688a7a5b4209edbb8",
+    "dataset_source": "sqlite.trials",
+    "dataset_filter": "duration_months in (1,240), enrollment non-null, status=COMPLETED, start/completion date types ACTUAL or legacy NULL",
+    "label_date_type_counts": {
+      "start_date_type": {
+        "NULL": 400
+      },
+      "completion_date_type": {
+        "NULL": 400
+      }
+    },
+    "completion_conditioned": true,
+    "design_time_snapshot_available": false,
+    "registry_snapshot": "latest_record_at_fetch_time",
+    "split_manifest_sha256": "286df0d8eb07df2614b2a75de599e3286d03f74053c34340b9590b136d81b57c"
+  },
+  "top_gain_features": [
+    [
+      "study_type_missing",
+      10.259130477905273
+    ],
+    [
+      "is_interventional",
+      8.4578857421875
+    ],
+    [
+      "phase_num",
+      2.8249928951263428
+    ],
+    [
+      "emb_123",
+      1.7103612422943115
+    ],
+    [
+      "emb_359",
+      1.2385730743408203
+    ],
+    [
+      "emb_60",
+      0.9966611862182617
+    ],
+    [
+      "emb_321",
+      0.8789577484130859
+    ],
+    [
+      "emb_54",
+      0.814361572265625
+    ],
+    [
+      "log_enrollment",
+      0.7681747078895569
+    ],
+    [
+      "emb_245",
+      0.7618846893310547
+    ],
+    [
+      "emb_280",
+      0.7470607757568359
+    ],
+    [
+      "emb_263",
+      0.6879184246063232
+    ],
+    [
+      "emb_71",
+      0.6822428703308105
+    ],
+    [
+      "emb_6",
+      0.6572456359863281
+    ],
+    [
+      "emb_133",
+      0.6561422348022461
+    ],
+    [
+      "emb_89",
+      0.6418414115905762
+    ],
+    [
+      "emb_326",
+      0.6369631886482239
+    ],
+    [
+      "emb_302",
+      0.6319310665130615
+    ],
+    [
+      "emb_372",
+      0.6151123046875
+    ],
+    [
+      "emb_211",
+      0.6083223819732666
+    ]
+  ],
+  "limitations": [
+    "Labels currently exist only for completed trials; active trials are not modeled as right-censored.",
+    "The legacy random score is not a prospective performance estimate.",
+    "The source contains latest registry records rather than registration-time feature snapshots."
+  ],
+  "artifacts": {
+    "generic_xgb": {
+      "artifact": "duration_model.json",
+      "artifact_sha256": "12133a1b876a78d2466cba5aecc6fbc624e4ae2fde606c4af6c55b61e4111eb7"
+    },
+    "text_ridge": {
+      "artifact": "duration_text_ridge.npz",
+      "artifact_sha256": "a93af70f672a0459634996f0545d684ade9fe0ba3acea90cc63a8db92f5b32de",
+      "artifact_schema_version": 1,
+      "alpha": 100.0,
+      "embedding_dim": 384,
+      "target": "log1p_duration_months"
+    },
+    "phase23_interventional_xgb": {
+      "artifact": "duration_model_phase23.json",
+      "artifact_sha256": "752e12754bf50c17564d3c580a18fd2547676ad32922c6efb81ba0693702a266"
+    }
+  }
+}

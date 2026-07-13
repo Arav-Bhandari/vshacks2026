@@ -1,11 +1,11 @@
-"""Weighted baseline duration/enrollment estimate from similar trials."""
+"""Estimate a baseline from similar trials."""
 import statistics
 
 _Z_90 = 1.645
 
 
 def _weighted_stats(pairs: list[tuple[float, float]]) -> tuple[float | None, float | None, float | None]:
-    """pairs = [(value, weight), ...]. Returns (mean, ci_low, ci_high)."""
+    """Return a weighted mean and 90% interval."""
     if not pairs:
         return None, None, None
     total_w = sum(w for _, w in pairs) or 1.0

@@ -1,4 +1,4 @@
-"""Quickstart wrapper: trains and saves the demo duration model."""
+"""Build a demo duration model."""
 import sys
 from pathlib import Path
 

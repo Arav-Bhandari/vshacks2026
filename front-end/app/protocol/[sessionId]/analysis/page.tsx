@@ -7,7 +7,6 @@ import { PipelineStepper } from "@/components/analysis/stepper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { OverviewTab } from "@/components/analysis/overview";
 import { SimilarTrialsTab } from "@/components/analysis/similar-trials";
-import { BenchmarksTab } from "@/components/analysis/benchmarks";
 import { BurdenTab } from "@/components/analysis/burden";
 import { RiskTab } from "@/components/analysis/risk";
 import { FdaTab } from "@/components/analysis/fda";
@@ -65,7 +64,6 @@ export default function AnalysisPage({
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="similar">Similar trials</TabsTrigger>
-          <TabsTrigger value="benchmarks">Benchmarks</TabsTrigger>
           <TabsTrigger value="burden">Burden</TabsTrigger>
           <TabsTrigger value="risk">Risk</TabsTrigger>
           <TabsTrigger value="fda">FDA</TabsTrigger>
@@ -77,9 +75,6 @@ export default function AnalysisPage({
         </TabsContent>
         <TabsContent value="similar">
           <SimilarTrialsTab trials={session.similar_trials} />
-        </TabsContent>
-        <TabsContent value="benchmarks">
-          <BenchmarksTab baseline={session.baseline} />
         </TabsContent>
         <TabsContent value="burden">
           <BurdenTab burden={session.burden} />

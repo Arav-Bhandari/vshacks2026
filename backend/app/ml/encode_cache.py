@@ -1,26 +1,19 @@
-"""Build the embedding cache for all training rows; resumable."""
-import pickle
+"""Build the trial embedding cache."""
+import hashlib
 import time
 
-from app.config import MODELS_DIR
-from app.ml.embeddings import build_text, embed_with_cache
-
-_TEXTS_PKL = MODELS_DIR / "train_texts.pkl"
+from app.ml.embeddings import embed_with_cache
 
 
 def load_ids_texts():
-    if _TEXTS_PKL.exists():
-        with open(_TEXTS_PKL, "rb") as f:
-            return pickle.load(f)
-    from app.ml.train import _load_db_rows
+    from app.ml.train import _load_db_rows, _row_embedding_text
+
     rows = _load_db_rows()
-    ids = [r["nct_id"] for r in rows]
-    texts = [
-        build_text(r.get("conditions"), r.get("interventions"), r.get("title"))
-        for r in rows
+    texts = [_row_embedding_text(row) for row in rows]
+    ids = [
+        f"{row['nct_id']}:{hashlib.sha256(text.encode()).hexdigest()[:16]}"
+        for row, text in zip(rows, texts)
     ]
-    with open(_TEXTS_PKL, "wb") as f:
-        pickle.dump((ids, texts), f)
     return ids, texts
 
 

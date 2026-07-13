@@ -10,6 +10,12 @@ database/*.db
 database/*.db-*
 backend/app/ml/models/*
 !backend/app/ml/models/duration_model.json
+!backend/app/ml/models/duration_model_phase23.json
+!backend/app/ml/models/duration_text_ridge.npz
+!backend/app/ml/models/train_meta.json
+!backend/app/ml/models/training_split_manifest.json
+!backend/app/ml/models/duration_aft_model.json
+!backend/app/ml/models/duration_aft_meta.json
 .venv/
 venv/
 .pytest_cache/

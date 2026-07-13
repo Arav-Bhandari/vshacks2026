@@ -23,10 +23,8 @@ for doc in docs:
   url = doc['url']
   filepath = os.path.join('$REPO_ROOT/fda', filename)
 
-  # Create parent directory if needed
   os.makedirs(os.path.dirname(filepath), exist_ok=True)
 
-  # Skip if file exists
   if os.path.exists(filepath):
     print(f'✓ {filename}')
     continue
@@ -39,7 +37,6 @@ for doc in docs:
     print(f'✗ Download failed for {filename}', file=sys.stderr)
     sys.exit(1)
 
-  # Verify PDF header
   with open(filepath, 'rb') as f:
     header = f.read(4)
     if header != b'%PDF':

@@ -1,4 +1,4 @@
-"""Upload, analyze, fetch, and export protocol sessions."""
+"""Manage protocol analysis sessions."""
 import asyncio
 import json
 import uuid

@@ -27,8 +27,8 @@ Each stage in `app/pipeline.py` transforms the protocol and updates the session:
 | baseline | `compute_baseline(similar_trials, n=10)` → dict | trial list | agg enrollment/duration stats | `session.baseline` |
 | burden | `analyze_burden(usdm)` → dict | USDM JSON | participant burden assessment | `session.burden` |
 | ml | `predict_duration_risk(usdm, baseline, burden)` → dict | all prior | XGBoost predictions + SHAP | `session.ml_prediction` |
-| fda | `analyze_fda_compliance(usdm)` → dict | USDM JSON | gaps vs. FDA guidance (Claude) | `session.fda_analysis` |
-| optimize | `optimize_protocol(usdm, similar, fda, burden)` → dict | all prior | revised protocol (Claude extended thinking) | `session.optimized_protocol` |
+| fda | `analyze_fda_compliance(usdm)` → dict | USDM JSON | gaps vs. FDA guidance (DeepSeek V4 Flash) | `session.fda_analysis` |
+| optimize | `optimize_protocol(usdm, similar, fda, burden)` → dict | all prior | revised protocol (DeepSeek V4 Flash) | `session.optimized_protocol` |
 
 ## Sessions Table Schema
 
@@ -68,14 +68,14 @@ SQLite `sessions` table stores protocol analysis state. All JSON fields are seri
 
 **ML models:**
 - Path: `backend/app/ml/models/`
-- Type: XGBoost (duration, risk classification)
-- Training: 556K completed trials with real duration
-- Features: extracted from USDM (phase, enrollment, study arms, etc.)
+- Type: temporally selected XGBoost + Ridge text stack, with a Phase II/III specialist
+- Training: actual-ended trials for regression; active trials are supported by a separate right-censored AFT experiment
+- Features: one canonical registry/USDM contract with design, population, site, endpoint-timeframe, and text features
 - Loaded by: `app/ml/predictor.py`
-- Training script: `app/ml/create_demo_models.py`
+- Training scripts: `python -m app.ml.train --deep` and `python -m app.ml.survival --deep`
 
 **FDA PDFs:**
 - Path: `fda/{category}/{filename}` (general, oncology, genetics)
 - Manifest: `fda/manifest.json` (filename, category, title, download URL)
 - Downloaded by: `scripts/fetch_fda.sh`
-- Used by: `app/services/fda_analyzer.py` (Claude reads & references)
+- Used by: `app/services/fda_analyzer.py` (DeepSeek V4 Flash analysis)

@@ -1,4 +1,4 @@
-"""Export a USDM dict as versioned JSON or as XML."""
+"""Export USDM data as JSON or XML."""
 import re
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone

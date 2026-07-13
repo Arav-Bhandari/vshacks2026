@@ -1,4 +1,4 @@
-"""Hybrid PDF -> markdown extraction: fitz for text, pdfplumber for tables."""
+"""Extract text and tables from PDF files."""
 import re
 
 import fitz

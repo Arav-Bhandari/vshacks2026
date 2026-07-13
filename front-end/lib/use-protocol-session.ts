@@ -32,9 +32,7 @@ export function useProtocolSession(sessionId: string) {
         try {
           const s = await api.getSession(sessionId);
           applySession(s);
-        } catch {
-          // transient poll failure; next tick retries
-        }
+        } catch {}
       }, 3000);
     };
 
@@ -62,9 +60,7 @@ export function useProtocolSession(sessionId: string) {
             if (data.status === "done" || data.status === "error") {
               api.getSession(sessionId).then(applySession).catch(() => {});
             }
-          } catch {
-            // ignore malformed frame
-          }
+          } catch {}
         };
         ws.onerror = () => startPolling();
         ws.onclose = () => startPolling();

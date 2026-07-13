@@ -8,7 +8,8 @@ from app.services import fda_analyzer as mod
 
 
 def _text_message(text):
-    return SimpleNamespace(content=[SimpleNamespace(type="text", text=text)])
+    message = SimpleNamespace(content=text)
+    return SimpleNamespace(choices=[SimpleNamespace(message=message)])
 
 
 def test_parse_indices_braces():
@@ -65,7 +66,10 @@ def test_list_guidance_docs_missing_manifest(tmp_path, monkeypatch):
 
 @pytest.mark.asyncio
 async def test_select_docs_parses_response():
-    client = SimpleNamespace(messages=SimpleNamespace(create=AsyncMock(return_value=_text_message("{0,1}"))))
+    create = AsyncMock(return_value=_text_message("{0,1}"))
+    client = SimpleNamespace(
+        chat=SimpleNamespace(completions=SimpleNamespace(create=create))
+    )
     docs = [
         {"category": "general", "title": "A"},
         {"category": "oncology", "title": "B"},
@@ -77,7 +81,10 @@ async def test_select_docs_parses_response():
 
 @pytest.mark.asyncio
 async def test_select_docs_falls_back_on_error():
-    client = SimpleNamespace(messages=SimpleNamespace(create=AsyncMock(side_effect=RuntimeError("boom"))))
+    create = AsyncMock(side_effect=RuntimeError("boom"))
+    client = SimpleNamespace(
+        chat=SimpleNamespace(completions=SimpleNamespace(create=create))
+    )
     docs = [
         {"category": "oncology", "title": "A"},
         {"category": "general", "title": "B"},
@@ -110,8 +117,9 @@ async def test_analyze_fda_compliance_end_to_end(tmp_path, monkeypatch):
         "gaps": [],
         "strengths": ["Well documented"],
     }))
+    create = AsyncMock(side_effect=[select_msg, analysis_msg])
     mock_client = SimpleNamespace(
-        messages=SimpleNamespace(create=AsyncMock(side_effect=[select_msg, analysis_msg]))
+        chat=SimpleNamespace(completions=SimpleNamespace(create=create))
     )
     with patch.object(mod, "get_client", return_value=mock_client):
         result = await mod.analyze_fda_compliance({"phase": "2"})

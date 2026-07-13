@@ -31,7 +31,6 @@ interface Trial {
   eligibility: string | null;
 }
 
-// opened fresh per call, DB may not exist yet
 function openDb(): Database.Database | null {
   try {
     const db = new Database(DB_PATH, { readonly: true, fileMustExist: true });

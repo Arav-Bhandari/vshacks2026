@@ -1,4 +1,4 @@
-"""Find historical trials similar to a USDM protocol."""
+"""Find similar historical trials."""
 import re
 
 from app.database.db import search_trials

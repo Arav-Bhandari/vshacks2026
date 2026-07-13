@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 import pytest
 
 from app.services.llm_utils import _parse_json_response
-from app.services.usdm_converter import normalize_phase
+from app.services.usdm_converter import _normalize, normalize_phase
 from app.services.usdm_export import export_usdm_json, export_usdm_xml
 
 
@@ -19,6 +19,30 @@ def test_normalize_phase_no_space():
 def test_normalize_phase_empty():
     assert normalize_phase("") == ""
     assert normalize_phase(None) is None
+
+
+def test_normalize_usdm_prunes_template_placeholders():
+    result = _normalize({
+        "study": {
+            "name": "Example",
+            "studyType": "INTERVENTIONAL|OBSERVATIONAL|",
+            "phase": "Phase II",
+            "arms": [{"name": "", "type": "", "description": ""}],
+            "population": {"plannedEnrollment": "", "healthyVolunteers": False},
+        }
+    })
+    assert result == {
+        "study": {
+            "name": "Example",
+            "phase": "Phase 2",
+            "population": {"healthyVolunteers": False},
+        }
+    }
+
+
+def test_normalize_usdm_requires_study_object():
+    with pytest.raises(ValueError):
+        _normalize({"notStudy": {}})
 
 
 def test_parse_json_response_fenced():

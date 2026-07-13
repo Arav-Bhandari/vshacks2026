@@ -1,14 +1,19 @@
-"""Shared Anthropic client + robust JSON parsing for LLM-backed services."""
+"""Shared language-model helpers."""
 import json
 import re
 
-from anthropic import AsyncAnthropic
+from openai import AsyncOpenAI
 
-from app.config import ANTHROPIC_API_KEY
+from app.config import DEEPSEEK_API_KEY, DEEPSEEK_BASE_URL
+
+NON_THINKING = {"thinking": {"type": "disabled"}}
 
 
-def get_client() -> AsyncAnthropic:
-    return AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
+def get_client() -> AsyncOpenAI:
+    return AsyncOpenAI(
+        api_key=DEEPSEEK_API_KEY,
+        base_url=DEEPSEEK_BASE_URL,
+    )
 
 
 def _parse_json_response(text: str) -> dict:

@@ -124,7 +124,6 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* generic press feedback for pressable elements */
 .pressable {
   transition:
     transform 160ms var(--ease-out),
@@ -160,12 +159,10 @@ body {
   }
 }
 
-/* opacity-only, for frequent switches like tab panels */
 .animate-fade {
   animation: fade 150ms var(--ease-out) both;
 }
 
-/* staggered entrance for card/list grids, decorative only */
 .stagger > * {
   opacity: 0;
   animation: fade-up 320ms var(--ease-out) both;

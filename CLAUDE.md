@@ -24,7 +24,7 @@ cd backend
 ```bash
 bash database/setup_database.sh  # venv + deps + trials
 bash scripts/fetch_fda.sh         # FDA PDFs
-cd backend && ../.venv/bin/python -m app.ml.create_demo_models  # ML models
+cd backend && ../.venv/bin/python -m app.ml.train --deep  # real duration stack
 ```
 
 ## Code Style
@@ -39,18 +39,18 @@ cd backend && ../.venv/bin/python -m app.ml.create_demo_models  # ML models
 
 **Pipeline orchestration:** `backend/app/pipeline.py` runs async stages:
 1. parse_pdf → extract text from uploaded protocol
-2. convert_to_usdm → Claude transforms markdown to USDM JSON
+2. convert_to_usdm → DeepSeek transforms markdown to USDM JSON
 3. find_similar → sentence-transformers + 4-factor scoring
 4. compute_baseline → aggregate metrics from similar trials
 5. analyze_burden → participant burden assessment
 6. predict_duration_risk → XGBoost + SHAP explanations
-7. analyze_fda_compliance → Claude 2-stage (haiku doc select + sonnet gap analysis)
-8. optimize_protocol → Claude extended thinking for improvements
+7. analyze_fda_compliance → DeepSeek selects guidance and finds gaps
+8. optimize_protocol → DeepSeek proposes improvements
 
 **Backend modules:**
 - `database/db.py` — SQLite session/trial CRUD
 - `ml/predictor.py` — load XGBoost models, generate predictions
-- `services/` — each stage has a module; `llm_utils.py` wraps Anthropic API
+- `services/` — each stage has a module; `llm_utils.py` wraps DeepSeek API
 - `routes/protocol.py` — POST /api/protocol/upload, GET/export endpoints
 - `routes/search.py` — /api/trials/search, POST /api/search/nl
 - `routes/ws.py` — WebSocket /ws/{id} for progress events
@@ -68,6 +68,7 @@ cd backend && ../.venv/bin/python -m app.ml.create_demo_models  # ML models
 
 ## Env & Secrets
 
-- `backend/app/.env` needs `ANTHROPIC_API_KEY`
+- `backend/app/.env` needs `DEEPSEEK_API_KEY`
+- Defaults: `deepseek-v4-flash` at `https://api.deepseek.com`
 - `front-end/.env.local` needs `NEXT_PUBLIC_API_URL=http://localhost:8000`
 - FDA PDFs auto-download to `fda/{category}/` if missing
