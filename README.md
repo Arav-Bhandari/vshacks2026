@@ -108,7 +108,7 @@ CRAP transforms messy, unstructured trial drafts into structured and regulator-a
 
 ### Pipeline
 
-PDF parse -> USDM conversion (DeepSeek V3) -> similar trials (semantic 4-factor scoring) -> weighted baseline benchmarks -> burden analysis -> ML duration/risk prediction with SHAP -> FDA compliance (guidance selection and gap analysis) -> optimized protocol draft (DeepSeek V3) -> USDM JSON/XML export.
+PDF parse -> USDM conversion (DeepSeek V4 Flash) -> similar trials (semantic 4-factor scoring) -> weighted baseline benchmarks -> burden analysis -> ML duration/risk prediction with SHAP -> FDA compliance (guidance selection and gap analysis) -> optimized protocol draft (DeepSeek V4 Flash) -> USDM JSON/XML export.
 
 ---
 
@@ -192,7 +192,7 @@ Register `node mcp-server/dist/index.js` in any MCP client config; see mcp-serve
 - Keyword search over 591K trials: <100ms (SQLite FTS5)
 - Similarity scoring: single batched sentence-transformer encode over candidates
 - ML prediction + SHAP: <1s
-- Full pipeline: minutes end to end, dominated by DeepSeek V3 stages; progress streamed live
+- Full pipeline: minutes end to end, dominated by DeepSeek V4 Flash stages; progress streamed live
 
 **Honest metrics**: training selects hyperparameters on expanding historical windows and reports an untouched mature-year test, a sponsor-held-out diagnostic, and the old random split separately. The authoritative row counts, raw/log R², MAE/RMSE, calibration, split manifest, data hash, and known snapshot limitations are written to `backend/app/ml/models/train_meta.json` on every run.
 
@@ -244,7 +244,7 @@ MIT License - see [LICENSE](LICENSE).
 
 ## Acknowledgments
 
-- **DeepSeek** - DeepSeek V3 API for AI processing
+- **DeepSeek** - DeepSeek V4 Flash API for AI processing
 - **ClinicalTrials.gov** - public clinical trials registry (591K+ studies loaded)
 - **CDISC** - USDM v3.0 standard for clinical study data
 - **FDA** - public guidance documents enabling regulatory intelligence
